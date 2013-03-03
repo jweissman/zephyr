@@ -1,8 +1,16 @@
 # Zephyr
 
-...
+A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
-Generated with [Raygun](https://github.com/carbonfive/raygun).
+(We'll see how long all that holds up performance-wise. But given that the updates are fairly 'lazy'...)
+
+Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that
+can be created with a click (and which async update for anyone on the page.)
+
+Looking to include a simple pong and asteroids style game.
+
+One goal for this is to try to help extract the platform we'll need for larger systems.
+
 
 # Requirements
 
