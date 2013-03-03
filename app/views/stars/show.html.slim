@@ -1,0 +1,23 @@
+.page-header
+  h1 Star
+
+dl
+  dt X
+  dd= @star.x
+  dt Y
+  dd= @star.y
+  dt Name
+  dd= @star.name
+  dt Description
+  dd= @star.description
+  dt Active
+  dd= @star.active
+
+- if can?(:edit, @star)
+  = link_to 'Edit', edit_star_path(@star), class: 'btn'
+  '
+= link_to 'Back', stars_path, class: 'btn'
+
+- if can?(:destroy, @star)
+  '
+  = link_to'Destroy', star_path(@star), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger'
