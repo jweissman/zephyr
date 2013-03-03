@@ -15,6 +15,7 @@ class Game extends atom.Game
 
 game = new Game
 
+# hard to validate sync with this on :)
 #window.onblur  = -> game.stop()
 #window.onfocus = -> game.run()
 

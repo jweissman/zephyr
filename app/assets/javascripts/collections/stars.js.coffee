@@ -4,7 +4,7 @@ class Zephyr.Collections.Stars extends Backbone.Collection
 
   initialize: ->
     @__subscriber__ = new BackboneSync.RailsFayeSubscriber(@, {
-      channel: "stars" # Set to Rails model.class.table_name, or override Model.faye_channel
+      channel: "stars"
       client: new Faye.Client(window.FayeEndpoint)
     })
 

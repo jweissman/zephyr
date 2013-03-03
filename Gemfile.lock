@@ -39,6 +39,8 @@ GEM
       ejs
       jquery-rails
       rails (>= 3.1)
+    backbone_sync-rails (0.0.8)
+      rails (>= 3.0.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cancan (1.6.9)
@@ -288,6 +290,7 @@ DEPENDENCIES
   active_attr
   awesome_print
   backbone-on-rails
+  backbone_sync-rails
   cancan
   cane
   capybara (~> 2.0)
