@@ -1,0 +1,15 @@
+= simple_form_for(star) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :x, autofocus: true
+    = f.input :y
+    = f.input :name
+    = f.input :description
+    = f.input :active
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'
+
+    = link_to 'Back', stars_path, class: 'btn'
+
