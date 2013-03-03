@@ -2,6 +2,12 @@ class Zephyr.Collections.Stars extends Backbone.Collection
   model: Zephyr.Models.Star
   url: "/stars.json"
 
+  initialize: ->
+    @__subscriber__ = new BackboneSync.RailsFayeSubscriber(@, {
+      channel: "stars" # Set to Rails model.class.table_name, or override Model.faye_channel
+      client: new Faye.Client(window.FayeEndpoint)
+    })
+
   create: (x,y) ->
     star = new Star({
       star: {
@@ -15,6 +21,10 @@ class Zephyr.Collections.Stars extends Backbone.Collection
   render: ->
     @each (model) ->
       model.render()
+
+  update: ->
+    @each (model) ->
+      model.set({x: model.get('x')+1})
 
 
 

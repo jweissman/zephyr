@@ -1,14 +1,15 @@
 Zephyr::Application.routes.draw do
-
+  # star resources
   resources :stars do
     collection do
       get 'destroy_all'
     end
   end
 
-
+  # temporary root at sandbox page
   root to: 'pages#sandbox'
 
+  # authentication stuff
   match 'sign_in'  => 'user_sessions#new',     as: :sign_in
   match 'sign_out' => 'user_sessions#destroy', as: :sign_out
 
@@ -23,6 +24,7 @@ Zephyr::Application.routes.draw do
   match 'reset_password/:token' => 'password_resets#edit', via: :get,  as: :reset_password
   match 'reset_password/:id' => 'password_resets#update',  via: :put
 
+  # user resource
   resources :users
 
 end

@@ -8,12 +8,14 @@ class Game extends atom.Game
     if atom.input.released 'click'
       StarsView.click(atom.input.mouse)
 
+    Stars.update()
+
   draw: ->
     StarsView.render()
 
 game = new Game
 
-window.onblur  = -> game.stop()
-window.onfocus = -> game.run()
+#window.onblur  = -> game.stop()
+#window.onfocus = -> game.run()
 
 game.run()

@@ -3,4 +3,6 @@ class Star < ActiveRecord::Base
 
   alias_attribute :x_pos, :x
   alias_attribute :y_pos, :y
+
+  def self.faye_channel; 'stars' end
 end
