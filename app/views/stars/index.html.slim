@@ -1,0 +1,39 @@
+#stars_app
+  div.page-header
+    h1 Oh my god
+    p Let's draw some stars, eh?
+
+  div.section-header
+    p If you have permission, you can destroy all stars here.
+    /- if can? :create, Star
+    /  = link_to 'New Star', new_star_path, class: 'btn btn-primary'
+
+    - if can? :destroy_all, Star
+      = link_to 'Destroy All', destroy_all_stars_path, method: :get, class: 'btn btn-warning'
+
+
+  table.table.table-striped
+    thead
+      tr
+        th ID
+        th X
+        th Y
+        th Name
+        th Description
+        th Active
+        th Actions
+
+    tbody#star_table
+      - @stars.each do |star|
+        tr
+          td= link_to_if can?(:show, star), star.id, star_path(star)
+          td= star.x
+          td= star.y
+          td= star.name
+          td= star.description
+          td= star.active
+          td
+            - if can? :edit, star
+              = link_to 'Edit', edit_star_path(star), class: 'btn btn-mini'
+            - if can? :destroy, star
+              = link_to 'Destroy', star_path(star), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-mini btn-danger'
