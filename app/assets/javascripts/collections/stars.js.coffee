@@ -9,13 +9,11 @@ class Zephyr.Collections.Stars extends Backbone.Collection
     })
 
   create: (x,y) ->
-    star = new Star({
-      star: {
+    star = new Star
+      star:
         x: atom.input.mouse.x
         y: atom.input.mouse.y
-      }
-    })
-    this.add(star)
+    @add star
     star.save()
 
   render: ->
@@ -24,7 +22,7 @@ class Zephyr.Collections.Stars extends Backbone.Collection
 
   update: ->
     @each (model) ->
-      model.set({x: model.get('x')+1})
+      model.set({x: model.get('x')+Math.random()})
 
 
 
