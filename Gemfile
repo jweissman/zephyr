@@ -16,7 +16,7 @@ gem 'pg'
 gem 'awesome_print'
 gem 'backbone-on-rails'
 gem 'backbone_sync-rails'
-#gem 'faye'
+gem 'faye'
 
 group :assets do
   gem 'less-rails'
