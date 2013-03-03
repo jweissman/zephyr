@@ -1,5 +1,4 @@
 # Gemfile
-
 # use rubygems
 source 'https://rubygems.org'
 
@@ -11,12 +10,15 @@ gem 'backbone_sync-rails'
 gem 'cancan'
 gem 'faye'
 gem 'jquery-rails'
+gem 'minitest'
 gem 'pg'
 gem 'rails', '~> 3.2.12'
 gem 'resque'
+gem 'rhc'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sorcery'
+gem 'thor'
 gem 'unicorn'
 gem 'valid_email'
 
@@ -57,8 +59,3 @@ group :development do
   gem 'rb-fsevent'
 end
 
-# This version needs to be hardcoded for OpenShift compatibility
-gem 'thor' #, '= 0.14.6'
-
-# This needs to be installed so we can run Rails console on OpenShift directly
-gem 'minitest'
