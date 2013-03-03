@@ -1,9 +1,8 @@
 class Zephyr.Views.StarsView extends Backbone.View
-  initialize: ->
-    @collection.on "all",    @render, this
-    @collection.on "create", @render, this
-
   render: ->
+    atom.context.fillStyle = 'black'
+    atom.context.fillRect 0, 0, atom.width, atom.height
+
     @collection.render()
 
   click: (mouse) =>

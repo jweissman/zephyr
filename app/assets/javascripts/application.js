@@ -15,8 +15,9 @@
 //= require twitter/bootstrap
 //= require underscore
 //= require backbone
+//= require extensions/backbone.collection.idempotent
+//= require backbone_sync-rails/rails_faye_subscriber
 //= require zephyr
-//= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views

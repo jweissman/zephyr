@@ -1,53 +1,59 @@
+# Gemfile
+# use rubygems
 source 'https://rubygems.org'
 
-# Heroku uses the ruby version to configure your application's runtime.
 ruby '1.9.3'
 
-gem 'thin'
-gem 'rails', '~> 3.2.12'
-gem 'slim-rails'
-gem 'jquery-rails'
-gem 'sorcery'
-gem 'cancan'
-gem 'simple_form'
+# gems for the app itself
 gem 'active_attr'
-gem 'valid_email'
-gem 'pg'
 gem 'awesome_print'
 gem 'backbone-on-rails'
+gem 'backbone_sync-rails'
+gem 'cancan'
+gem 'faye'
+gem 'jquery-rails'
+gem 'pg'
+gem 'rails', '~> 3.2.12'
+gem 'simple_form'
+gem 'slim-rails'
+gem 'sorcery'
+gem 'thor'
+gem 'unicorn'
+gem 'valid_email'
 
+# asset gems
 group :assets do
+  gem 'coffee-rails'
   gem 'less-rails'
   gem 'less-rails-bootstrap'
-  gem 'coffee-rails'
-  gem 'uglifier'
-
-  # Heroku suggests that these gems aren't necessary, but they're required to compile less assets on deploy.
-  gem 'therubyracer'
   gem 'libv8', '~> 3.11.8'
+  gem 'therubyracer'
+  gem 'uglifier'
 end
 
+# test gems
 group :test, :development do
-  gem 'rspec-rails', '~> 2.12.0'
+  gem 'cane'
   gem 'capybara', '~> 2.0'
   gem 'capybara-email'
   gem 'factory_girl_rails'
   gem 'jasminerice'
-  gem 'timecop'
-  gem 'simplecov'
-  gem 'cane'
   gem 'morecane'
   gem 'quiet_assets'
+  gem 'rspec-rails', '~> 2.12.0'
+  gem 'simplecov'
+  gem 'timecop'
 end
 
+# dev gems
 group :development do
   gem 'foreman'
-  gem 'launchy'
-  gem 'mailcatcher'
+  gem 'growl'
   gem 'guard'
-  gem 'guard-rspec'
   gem 'guard-jasmine'
   gem 'guard-livereload'
+  gem 'guard-rspec'
+  gem 'launchy'
+  gem 'mailcatcher'
   gem 'rb-fsevent'
-  gem 'growl'
 end
