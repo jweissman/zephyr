@@ -1,5 +1,9 @@
+# Gemfile
+
+# use rubygems
 source 'https://rubygems.org'
 
+# gems for the app itself
 gem 'active_attr'
 gem 'awesome_print'
 gem 'backbone-on-rails'
@@ -13,9 +17,10 @@ gem 'resque'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sorcery'
-gem 'thin'
+gem 'unicorn'
 gem 'valid_email'
 
+# asset gems
 group :assets do
   gem 'coffee-rails'
   gem 'less-rails'
@@ -25,6 +30,7 @@ group :assets do
   gem 'uglifier'
 end
 
+# test gems
 group :test, :development do
   gem 'cane'
   gem 'capybara', '~> 2.0'
@@ -38,6 +44,7 @@ group :test, :development do
   gem 'timecop'
 end
 
+# dev gems
 group :development do
   gem 'foreman'
   gem 'growl'
@@ -49,3 +56,9 @@ group :development do
   gem 'mailcatcher'
   gem 'rb-fsevent'
 end
+
+# This version needs to be hardcoded for OpenShift compatibility
+gem 'thor' #, '= 0.14.6'
+
+# This needs to be installed so we can run Rails console on OpenShift directly
+gem 'minitest'
