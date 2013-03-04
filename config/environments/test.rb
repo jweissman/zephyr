@@ -35,7 +35,8 @@ Zephyr::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { host: 'zephyr-games.herokuapp.com' }
+  # ?
+  config.action_mailer.default_url_options = { host: 'example.com' }
 end
 
 # Turn down the cost so that specs run quickly.
