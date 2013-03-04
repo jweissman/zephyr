@@ -11,7 +11,6 @@ class Game extends atom.Game
 
     Stars.fetch({})
 
-
   update: (dt) ->
     if atom.input.released 'click'
       StarsView.click(atom.input.mouse)

@@ -43,13 +43,14 @@ class StarsController < ApplicationController
   end
 
   def destroy_all
+    # WOW long-running...!
 
-    Star.delete_all()
+    Star.all.each { |star| star.destroy }
+
     respond_to do |format|
       format.html { redirect_to stars_url }
       format.json { head :no_content }
     end
-    return
 
   end
 

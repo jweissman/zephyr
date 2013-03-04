@@ -13,7 +13,7 @@ class Zephyr.Collections.Stars extends Backbone.Collection
       star:
         x: atom.input.mouse.x
         y: atom.input.mouse.y
-    @add star
+#    @add star
     star.save()
 
   render: ->
