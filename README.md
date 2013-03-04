@@ -2,14 +2,14 @@
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
-(We'll see how long all that holds up performance-wise. But given that the updates are fairly 'lazy' for now...)
-
 Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that
-can be created with a click (and which async update for anyone on the page.)
+can be created with a click. These sync with Rails, which talks to Faye and broadcasts an update to clients
+(so that the star field async updates for anyone on the page.) It might be especially interesting to watch the #destroy_all
+operation running over the stars -- you can watch them wink out. It's all relatively fast, as such things go, but I think we'll
+definitely want to limit the number of model changes we want to observe server-side.
 
-Looking to include a simple pong and asteroids style game.
-
-One goal for this is to try to help extract the platform we'll need for larger systems.
+Eventually we're looking to include a simple pong and asteroids style game. One goal for this is to try to help extract
+the platform we'll need for larger systems.
 
 
 # Requirements
@@ -60,6 +60,10 @@ Install the heroku toolbelt if you don't already have it (https://toolbelt.herok
     $ heroku apps:create zephyr
     $ git push heroku master
     $ heroku run rake db:setup
+
+Note that heroku doesn't support websockets (!) so you'll need to run Faye elsewhere. As luck would have it, Openshift lets
+you handle websockets, but you do have to set a DIY instance. This is actually relatively straightforward and I am happy to
+share details if anyone is interested. (Since it's part of our "infrastructure" now I'll try to document in the wiki eventually.)
 
 # Considerations
 
