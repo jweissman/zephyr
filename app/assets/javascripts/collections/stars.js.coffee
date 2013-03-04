@@ -5,7 +5,7 @@ class Zephyr.Collections.Stars extends Backbone.Collection
   initialize: ->
     @__subscriber__ = new BackboneSync.RailsFayeSubscriber(@, {
       channel: "stars"
-      client: new Faye.Client(window.FayeEndpoint)
+      client: new Faye.Client("https://zephyrfayediy-cerulean.rhcloud.com:8443/faye")
     })
 
   create: (x,y) ->
@@ -22,7 +22,7 @@ class Zephyr.Collections.Stars extends Backbone.Collection
 
   update: ->
     @each (model) ->
-      model.set({x: model.get('x')+Math.random()})
+      model.set({x: model.get('x')+ 0.5-Math.random()})
 
 
 

@@ -6,9 +6,9 @@ html
     = javascript_include_tag 'application'
     = csrf_meta_tag
     = yield :head
-    script src="#{BackboneSync::Rails::Faye.root_address}/faye.js" type="text/javascript"
+    script src="http://zephyrfayediy-cerulean.rhcloud.com/faye.js" type="text/javascript"
     javascript:
-      window.FayeEndpoint = "#{BackboneSync::Rails::Faye.root_address}/faye";
+      window.FayeEndpoint = "http://zephyrfaye-cerulean.rhcloud.com/faye";
 
   body id=(controller.controller_name) class=(controller.action_name)
     .wrapper

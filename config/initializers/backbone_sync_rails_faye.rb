@@ -1,2 +1,2 @@
-faye_host = Rails.env.production? ? "zephyrfaye-cerulean.rhcloud.com" : "localhost:9292"
-BackboneSync::Rails::Faye.root_address = "http://#{faye_host}"
+faye_host = "zephyrFayeDiy-cerulean.rhcloud.com/faye" # Rails.env.production? ? "zephyrfaye-cerulean.rhcloud.com" : "zephyrfaye-cerulean.rhcloud.com:8000"
+BackboneSync::Rails::Faye.root_address = "https://#{faye_host}"
