@@ -27,7 +27,7 @@ class StarsController < ApplicationController
   def create
     @star = Star.new(params[:star])
 
-    if @star.save
+    if @star.save!
       redirect_to @star, notice: 'Star was successfully created.'
     else
       render action: "new"
