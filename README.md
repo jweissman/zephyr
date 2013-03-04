@@ -1,8 +1,8 @@
-# Zephyr
+# Zephyr [![Codeship Status for jweissman/zephyr](https://www.codeship.io/projects/3c3dbf20-6665-0130-f564-22000a9d0597/status?branch=master)](https://www.codeship.io/projects/1740) [![Code Climate](https://codeclimate.com/github/jweissman/zephyr.png)](https://codeclimate.com/github/jweissman/zephyr)
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
-(We'll see how long all that holds up performance-wise. But given that the updates are fairly 'lazy'...)
+(We'll see how long all that holds up performance-wise. But given that the updates are fairly 'lazy' for now...)
 
 Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that
 can be created with a click (and which async update for anyone on the page.)

@@ -25,5 +25,3 @@ class Zephyr.Collections.Stars extends Backbone.Collection
       model.set({x: model.get('x')+ 0.5-Math.random()})
 
 
-
-

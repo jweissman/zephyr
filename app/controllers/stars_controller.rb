@@ -2,7 +2,7 @@ class StarsController < ApplicationController
 
   load_and_authorize_resource
 
-  respond_to :html, :json
+  #respond_to :html, :json
 
   def index
     respond_to do |format|
@@ -26,8 +26,7 @@ class StarsController < ApplicationController
 
   def create
     @star = Star.new(params[:star])
-
-    if @star.save!
+    if @star.save
       redirect_to @star, notice: 'Star was successfully created.'
     else
       render action: "new"
@@ -49,8 +48,6 @@ class StarsController < ApplicationController
       format.html { redirect_to stars_url }
       format.json { head :no_content }
     end
-    return
-
   end
 
   def destroy
