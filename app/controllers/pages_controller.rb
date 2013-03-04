@@ -10,5 +10,4 @@ class PagesController < ApplicationController
 
   def universe
   end
-
 end

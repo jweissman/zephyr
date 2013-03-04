@@ -9,6 +9,7 @@ Zephyr::Application.routes.draw do
   # temporary root at sandbox page
   root to: 'pages#root'
 
+  # demos
   match 'universe' => 'pages#universe', as: :universe
 
   # authentication stuff
