@@ -11,11 +11,3 @@ test:
   <<: *default
   database: zephyr_test
   min_messages: warning
-
-production:
-  <<: *default
-  username: <%=ENV['OPENSHIFT_POSTGRESQL_DB_USERNAME']%>
-  password: <%=ENV['OPENSHIFT_POSTGRESQL_DB_PASSWORD']%>
-  database: <%=ENV['OPENSHIFT_APP_NAME']%>
-  host: <%=ENV['OPENSHIFT_POSTGRESQL_DB_HOST']%>
-  port: <%=ENV['OPENSHIFT_POSTGRESQL_DB_PORT']%>

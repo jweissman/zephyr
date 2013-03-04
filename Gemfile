@@ -2,6 +2,8 @@
 # use rubygems
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 # gems for the app itself
 gem 'active_attr'
 gem 'awesome_print'
@@ -10,11 +12,8 @@ gem 'backbone_sync-rails'
 gem 'cancan'
 gem 'faye'
 gem 'jquery-rails'
-gem 'minitest'
 gem 'pg'
 gem 'rails', '~> 3.2.12'
-gem 'resque'
-gem 'rhc'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sorcery'
@@ -58,4 +57,3 @@ group :development do
   gem 'mailcatcher'
   gem 'rb-fsevent'
 end
-
