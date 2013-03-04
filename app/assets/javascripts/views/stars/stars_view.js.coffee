@@ -1,6 +1,6 @@
 class Zephyr.Views.StarsView extends Backbone.View
   render: ->
-    atom.context.fillStyle = 'white'
+    atom.context.fillStyle = 'black'
     atom.context.fillRect 0, 0, atom.width, atom.height
 
     @collection.render()
