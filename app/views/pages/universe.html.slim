@@ -1,2 +1,9 @@
 canvas
-= javascript_include_tag :atom, :universe
+= javascript_include_tag :atom, :molecular
+
+javascript:
+  faye_server = "#{Zephyr::Application.config.faye_secure_server}";
+coffee:
+  Molecular.Sync.FayeServer = faye_server
+
+= javascript_include_tag :universe

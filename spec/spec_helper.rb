@@ -31,6 +31,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/email/rspec'
 
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -78,3 +79,12 @@ ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
 # Turn down the logging while testing.
 Rails.logger.level = 4
+
+
+# wait times? other capy stuff...?
+#Capybara.run_server = true #Whether start server when testing
+#Capybara.server_port = 8200
+#Capybara.default_selector = :css #:xpath #default selector , you can change to :css
+#Capybara.default_wait_time = 5 #When we testing AJAX, we can set a default wait time
+#Capybara.ignore_hidden_elements = false #Ignore hidden elements when testing, make helpful when you hide or show elements using javascript
+#Capybara.javascript_driver = :selenium #default driver when you using @javascript tag

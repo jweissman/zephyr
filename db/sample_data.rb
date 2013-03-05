@@ -22,3 +22,11 @@ User.find_or_create_by_email('admin@example.com') do |u|
   u.password = 'password'
   u.admin    = true
 end.activate!
+
+# some stars :)
+25.times do
+  Star.create do |s|
+    s.x = (rand * 1024).to_i
+    s.y = (rand * 800).to_i
+  end
+end
