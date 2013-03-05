@@ -6,6 +6,9 @@ class Zephyr.Views.StarView extends Backbone.View
 
     ctx = atom.context
     ctx.beginPath();
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "white";
+
     ctx.arc(x, y, 3 + Math.random()*0.5, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'white';
     ctx.fill();
