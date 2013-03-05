@@ -1,18 +1,16 @@
 class Zephyr.Collections.Stars extends Backbone.Collection
   model: Zephyr.Models.Star
-  url: "/stars.json"
+  url:   "/stars.json"
 
   initialize: ->
-    @__subscriber__ = new BackboneSync.RailsFayeSubscriber(@, {
-      channel: "stars"
-      client: new Faye.Client("https://zephyrfayediy-cerulean.rhcloud.com:8443/faye")
-    })
+    Molecular.Sync.subscribe @, 'stars'
 
   create: (x,y) ->
     star = new Star
       star:
-        x: atom.input.mouse.x
-        y: atom.input.mouse.y
+        x: x
+        y: y
+
     star.save()
 
   render: ->
@@ -21,5 +19,5 @@ class Zephyr.Collections.Stars extends Backbone.Collection
 
   update: ->
     @each (model) ->
-      model.set({x: model.get('x')+ 0.5-Math.random()})
-
+      model.set
+        x: model.get('x') + (0.5-Math.random())

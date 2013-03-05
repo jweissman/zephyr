@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
     else
       can [:read, :update], User, id: user.id
-      can [:read, :create, :update, :destroy, :destroy_all], Star
+      can [:read, :create, :update, :destroy], Star
     end
 
     # No one can destroy themselves.

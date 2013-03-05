@@ -25,6 +25,7 @@ gem 'valid_email'
 group :assets do
   gem 'coffee-rails'
   gem 'less-rails'
+  gem 'jasmine-sinon-rails'
   gem 'less-rails-bootstrap'
   gem 'libv8', '~> 3.11.8'
   gem 'therubyracer'

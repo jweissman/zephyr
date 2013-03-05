@@ -1,29 +1,16 @@
-class Game extends atom.Game
-  constructor: ->
+class Universe extends Molecular.App
+  setup: ->
     super
-    atom.input.bind atom.button.LEFT, 'click'
-    atom.input.bind atom.button.RIGHT, 'rightclick'
+    @connectBackbone()
+    @collection = Stars
+    @view = StarsView
 
-    window.Star        = Zephyr.Models.Star
-    window.StarView    = Zephyr.Views.StarView
+  # backbone setup
+  connectBackbone: ->
     window.Stars       = new Zephyr.Collections.Stars()
     window.StarsView   = new Zephyr.Views.StarsView {collection: Stars}
+    window.Star        = Zephyr.Models.Star
+    window.StarView    = Zephyr.Views.StarView
 
-    Stars.fetch({})
-
-  update: (dt) ->
-    if atom.input.released 'click'
-      StarsView.click(atom.input.mouse)
-
-    Stars.update()
-
-  draw: ->
-    StarsView.render()
-
-game = new Game
-
-# hard to validate sync with this on :)
-#window.onblur  = -> game.stop()
-#window.onfocus = -> game.run()
-
-game.run()
+universe = new Universe
+universe.run()

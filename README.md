@@ -2,14 +2,18 @@
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
-Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that
-can be created with a click. These sync with Rails, which talks to Faye and broadcasts an update to clients
-(so that the star field async updates for anyone on the page.) It might be especially interesting to watch the #destroy_all
-operation running over the stars -- you can watch them wink out. It's all relatively fast, as such things go, but I think we'll
-definitely want to limit the number of model changes we want to observe server-side.
+Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that can be created with a click.
 
-Eventually we're looking to include a simple pong and asteroids style game. One goal for this is to try to help extract
-the platform we'll need for larger systems.s
+These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to clients so that the star field async updates for anyone on the page.
+
+It might be especially interesting to watch the #destroy_all operation running over the stars -- you can watch them wink out!
+
+Note all this does require having a running Faye server somewhere in the cloud (a link to a suitable OpenShift DIY instance running Faye are below.)
+
+It's all relatively fast, as such things go, but I think we'll definitely want to limit the number of model changes we want to observe server-side.
+
+Eventually we're looking to include a simple pong and asteroids style game. One goal for this is to try to help extract the platform we'll need for larger systems.
+
 
 # Requirements
 
@@ -62,8 +66,12 @@ Install the heroku toolbelt if you don't already have it (https://toolbelt.herok
 
 Note that heroku doesn't support websockets (!) so you'll need to run Faye elsewhere. As luck would have it, Openshift lets
 you handle websockets, but you do have to set a DIY instance. This is actually relatively straightforward and I am happy to
-share details if anyone is interested. (Since it's part of our "infrastructure" now I'll try to document in the wiki eventually.)
+share details if anyone is interested.
+
+Since it's part of our "infrastructure" now I'll try to document it a bit more carefully in the wiki eventually, but I've gone ahead and put my DIY
+folder structure [up on Github](https://github.com/jweissman/zephyr-faye-diy) in case anyone else wants to repurpose it.
 
 # Considerations
 
+Andrew Kasper (@akasper) -- review/consultation/testing
 ...
