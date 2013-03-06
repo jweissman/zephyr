@@ -2,17 +2,11 @@
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
-Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that can be created with a click.
+Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that can be created with a click. These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to clients so that the star field async updates for anyone on the page.
 
-These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to clients so that the star field async updates for anyone on the page.
+It might be especially interesting to watch the #destroy_all operation running over the stars -- you can watch them wink out! Note all this does require having a running Faye server somewhere in the cloud (a link to a suitable OpenShift DIY instance running Faye are below.)
 
-It might be especially interesting to watch the #destroy_all operation running over the stars -- you can watch them wink out!
-
-Note all this does require having a running Faye server somewhere in the cloud (a link to a suitable OpenShift DIY instance running Faye are below.)
-
-It's all relatively fast, as such things go, but I think we'll definitely want to limit the number of model changes we want to observe server-side.
-
-Eventually we're looking to include a simple pong and asteroids style game. One goal for this is to try to help extract the platform we'll need for larger systems.
+It's all relatively fast, as such things go, but I think we'll definitely want to limit the number of model changes we want to observe server-side. Eventually we're looking to include a simple pong and asteroids style game. One goal for this is to try to help extract the platform we'll need for larger systems.
 
 
 # Requirements
