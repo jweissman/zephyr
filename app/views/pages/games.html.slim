@@ -1,0 +1,22 @@
+canvas style="z-index: 0; margin-top:0"
+  = javascript_include_tag :atom, :molecular
+
+
+/div.page-header style="z-index:1; margin: 0 20px; position: absolute; opacity: 0.9"
+/  h1 Games
+/  p A list of games might be here...
+/
+.hero-unit style="z-index:1; margin: 0 20px; position: absolute; opacity: 0.9"
+  h1 Our Games
+  h3
+    span A list of Zephyr games might be here...
+
+  p We definitely want to put together a simple pong-style arcade game with multiplayer/automatch functionality, and have that be pretty straightforward to use.
+  p We also want to do larger simulations/systems, as well as RPGs. Definitely watch this space! :)
+
+javascript:
+  faye_server = "#{Zephyr::Application.config.faye_secure_server}";
+coffee:
+  Molecular.Sync.FayeServer = faye_server
+
+= javascript_include_tag :universe

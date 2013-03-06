@@ -1,27 +1,20 @@
 class Zephyr.Views.StarView extends Backbone.View
   initialize: ->
+
+
   render: ->
     x = @model.get 'x'
     y = @model.get 'y'
 
-    ctx = atom.context
-    ctx.beginPath();
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = "white";
+#    if Math.random() < 0.002
+    @ellipse = new Molecular.Canvas.Ellipse x,y,{
+      radius: 1
+      line_width: 0
+      blur: 10
+      stroke_style: 'white'
+      fill_style: 'yellow'
+      shadow_color: 'white'
+      glowing: true
+    }
 
-    ctx.arc(x, y, 3 + Math.random()*0.5, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'white';
-    ctx.fill();
-    ctx.lineWidth = 0.25;
-    ctx.strokeStyle = '#8F8F8F';
-    ctx.stroke();
-
-#    ctx.fillStyle = "white"
-#    ctx.globalAlpha = 0.5
-#    ctx.fillRect x, y, 5, 5
-#    ctx.globalAlpha = 1
-#    ctx.strokeStyle = "white"
-#    ctx.lineWidth = 1
-#    ctx.strokeRect x, y, 5, 5
-
-
+    @ellipse.inscribe()

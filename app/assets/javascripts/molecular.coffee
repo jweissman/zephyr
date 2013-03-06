@@ -1,19 +1,20 @@
 #
-# molecular: lightweight wrapper around atom instances
-#            (goal is to help provide some of the support for multiplayer --
-#            logic 'between' instances -- syncing model data, actions, etc.)
+# molecular!
+#   - lightweight wrapper around atom instances
+#   - goal is to help provide some of the support for multiplayer --
+#     logic 'between' instances -- syncing model data, actions, etc.
 #
-
 root = exports ? this
+root.Molecular = Molecular = {}
 
 #
-#   Molecular.GameEngine
+#   Molecular.Engine
 #
-#       core game engine, extends atom.Game
-#       responsible for initialization and kicking updates to the bound app
+#       core game engine, extends (and is a lightweight wrapper around) atom.Game
+#       responsible for input binding and kicking updates to the bound app
 #
 #
-class Engine extends atom.Game
+class Molecular.Engine extends atom.Game
   constructor: (@app) ->
     super
     atom.input.bind atom.button.LEFT, 'click'
@@ -33,41 +34,97 @@ class Engine extends atom.Game
 #     -- really just a lightweight wrapper around backbone sync / faye at this point
 #     -- could be much more interesting (!)
 #
-Sync = {
+Molecular.Sync = {
   subscribe: (model, channel) ->
     new BackboneSync.RailsFayeSubscriber model,
       channel: channel
       client: new Faye.Client(Molecular.Sync.FayeServer)
 }
 
+#
+#   Molecular.Canvas
+#     graphics with molecules!
+#     -- again, really just some canvas helpers ATM...
+#
+Molecular.Canvas = {}
+
 
 #
-#   molecular app
-#     -- at this point fairly single-collection centric
-#        (will presumably need to be addressed again...)
-#     -- has a view which it renders and routes clicks to
+#   Molecular.Canvas.Path
 #
-class App
+#     - the basic idea is to wrap around the canvas drawing api
+#       with shapes and mixins
+#
+class Molecular.Canvas.Path
+  constructor: (@opts) ->
+    @glowing = @opts['glowing'] or= false
+    if @glowing
+      ObjectHelper.addRole(@, Molecular.Canvas.Glowing)
+
+  beforeAll: ->
+    atom.context.beginPath()
+
+  afterAll: ->
+    @fill_style   = @opts['fill_style']  or= 'white'
+    @line_width   = @opts['line_width']  or= 1
+    @stroke_style = @opts['stroke_style'] or= "#FFFFFF"
+
+    @glow() if @glowing
+
+    atom.context.fillStyle   = @fill_style
+    atom.context.fill()
+    atom.context.lineWidth   = @line_width
+    atom.context.strokeStyle = @stroke_style
+    atom.context.stroke()
+
+  before: ->
+  after: ->
+
+  inscribe: ->
+    @beforeAll()
+    @before()
+    @draw()
+    @after()
+    @afterAll()
+
+#
+#     a mixin for things that glow
+#
+class Molecular.Canvas.Glowing extends Mixin
+  glow: ->
+    @blur        = @opts['blur']  or= 10
+    @shadowColor = @opts['shadow_color'] or= 'white'
+    atom.context.shadowBlur  = @blur
+    atom.context.shadowColor = @shadowColor
+
+#
+# canvas helper for drawing circles
+#
+class Molecular.Canvas.Ellipse extends Molecular.Canvas.Path
+  constructor: (@x,@y,@opts) ->
+    super(@opts)
+    @radius = @opts['radius'] or= 3
+
+  draw: ->
+    atom.context.arc @x, @y, @radius, 0, 2*Math.PI, false
+
+#
+#   molecular view
+#     -- currently has a single bound backbone view which it renders
+#        and routes clicks to...
+#
+class Molecular.App
   constructor: ->
     @setup()
 
   setup: ->
-    @engine   = new Engine @
+    @engine = new Molecular.Engine @
 
   run: ->
-    @collection.fetch({})
     @engine.run()
 
   draw: ->
     @view.render()
 
-  update: ->
-    @collection.update()
-
   click: (mouse) ->
     @view.click(mouse)
-
-root.Molecular = {}
-root.Molecular.App = App
-root.Molecular.Sync = Sync
-root.Molecular.Engine = Engine

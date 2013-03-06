@@ -1,3 +1,5 @@
+# canvas game coffee 'bootstrapper' (from nornagon/atom)
+
 requestAnimationFrame = window.requestAnimationFrame or
 window.webkitRequestAnimationFrame or
 window.mozRequestAnimationFrame or

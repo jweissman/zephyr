@@ -3,11 +3,9 @@ class PagesController < ApplicationController
   skip_authorization_check
 
   def root
+    redirect_to :games if logged_in?
   end
 
-  def sandbox
-  end
-
-  def universe
+  def games
   end
 end

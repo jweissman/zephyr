@@ -1,18 +1,23 @@
-.hero-unit
-  h1 Zephyr!
-  h4 An open-source framework for developing Canvas games in Ruby and Coffeescript.
+canvas style="z-index: 0; margin-top:0"
+  = javascript_include_tag :atom, :molecular
+
+.hero-unit style="z-index:1; position: absolute; width: 60%; opacity: 0.9"
+  h1 Welcome, traveller!
+  h3
+    span You've found&nbsp
+    a href="https://github.com/jweissman/zephyr" Zephyr
+    span , an awesome open-source system for making canvas games in Ruby and Coffeescript.
 
   p
-    span Don't you want to check out&nbsp
-    a href=universe_path the universe
-    span ?
+    span If you click on the canvas behind this hero unit, you can create a star.&nbsp
+    b Anyone else connected to this page can also see the star you've just created.
+  div
+    p Our system leverages websockets for broadcasting, with Rails and Backbone providing smooth syncing of models.
+    p Our goal is a sweet and simple multiplayer canvas game framework, with the messaging layer demonstrated here as one component.
 
-  p
-    span Check out all our source&nbsp
-    = link_to "on Github", 'https://github.com/jweissman/zephyr'
-    span !
+javascript:
+  faye_server = "#{Zephyr::Application.config.faye_secure_server}";
+coffee:
+  Molecular.Sync.FayeServer = faye_server
 
-  p [This is alpha stuff, guys. (For example, you can sign in as user@example.com / password).]
-
-  p: a.btn.btn-primary.btn-large href=sign_in_path Sign In
-
+= javascript_include_tag :universe

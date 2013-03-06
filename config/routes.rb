@@ -10,7 +10,7 @@ Zephyr::Application.routes.draw do
   root to: 'pages#root'
 
   # demos
-  match 'universe' => 'pages#universe', as: :universe
+  match 'games' => 'pages#games', as: :games
 
   # authentication stuff
   match 'sign_in'  => 'user_sessions#new',     as: :sign_in
