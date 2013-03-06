@@ -35,7 +35,7 @@ describe UserSessionsController do
 
     it "redirects to the sign in page" do
       delete :destroy
-      expect(response).to redirect_to(sign_in_url)
+      expect(response).to redirect_to(root_url)
     end
   end
 
