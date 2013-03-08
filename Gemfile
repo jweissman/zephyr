@@ -44,6 +44,7 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.12.0'
   gem 'simplecov'
   gem 'timecop'
+  gem 'pry'
 end
 
 # dev gems
