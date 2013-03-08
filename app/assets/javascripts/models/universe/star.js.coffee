@@ -8,8 +8,7 @@ class Zephyr.Models.Star extends Backbone.Model
       y: 0
 
   initialize: ->
-    @view = new Zephyr.Views.StarView
-      model: @
+    @view = new Zephyr.Views.StarView(model: @)
 
   render: =>
     @view.render()
