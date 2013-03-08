@@ -1,5 +1,4 @@
 canvas.universe
-  = javascript_include_tag :atom, :molecular
 
 .btn.btn-primary.btn-large.toggle-me Toggle Me
 
@@ -24,10 +23,8 @@ canvas.universe
 
 
 javascript:
-  faye_server = "#{Zephyr::Application.config.faye_secure_server}";
+  window.FayeServer = "#{Zephyr::Application.config.faye_secure_server}";
 coffee:
-  Molecular.Sync.FayeServer = faye_server
-
   $(".toggle-me").click ->
     $(".toggle-me").addClass "active"
     $(".project-copy").toggle()

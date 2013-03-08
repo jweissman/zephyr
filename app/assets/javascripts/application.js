@@ -22,3 +22,6 @@
 //= require_tree ./collections
 //= require_tree ./views
 //= require_tree ./support
+//= require atom
+//= require molecular
+

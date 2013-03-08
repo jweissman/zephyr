@@ -105,24 +105,27 @@ eventCode = (e) ->
     else
       atom.button.WHEELDOWN
 
-atom.canvas = document.getElementsByTagName('canvas')[0]
-atom.canvas.style.position = "absolute"
-atom.canvas.style.top = "0"
-atom.canvas.style.left = "0"
-atom.context = atom.canvas.getContext '2d'
-
-atom.canvas.onmousemove = atom.input.onmousemove.bind(atom.input)
-atom.canvas.onmousedown = atom.input.onmousedown.bind(atom.input)
-atom.canvas.onmouseup = atom.input.onmouseup.bind(atom.input)
-atom.canvas.onmousewheel = atom.input.onmousewheel.bind(atom.input)
-atom.canvas.oncontextmenu = atom.input.oncontextmenu.bind(atom.input)
-
 window.onresize = (e) ->
   atom.canvas.width = window.innerWidth
   atom.canvas.height = window.innerHeight
   atom.width = atom.canvas.width
   atom.height = atom.canvas.height
-window.onresize()
+
+$(document).ready = ->
+  console.log "--- atom setup"
+  atom.canvas = document.getElementsByTagName('canvas')[0]
+  atom.canvas.style.position = "absolute"
+  atom.canvas.style.top = "0"
+  atom.canvas.style.left = "0"
+  atom.context = atom.canvas.getContext '2d'
+
+  atom.canvas.onmousemove = atom.input.onmousemove.bind(atom.input)
+  atom.canvas.onmousedown = atom.input.onmousedown.bind(atom.input)
+  atom.canvas.onmouseup = atom.input.onmouseup.bind(atom.input)
+  atom.canvas.onmousewheel = atom.input.onmousewheel.bind(atom.input)
+  atom.canvas.oncontextmenu = atom.input.oncontextmenu.bind(atom.input)
+
+  window.onresize()
 
 class Game
   constructor: ->

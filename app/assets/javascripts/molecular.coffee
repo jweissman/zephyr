@@ -7,6 +7,7 @@
 root = exports ? this
 root.Molecular = Molecular = {}
 
+console.log "=== defining molecular..."
 #
 #   Molecular.Engine
 #
@@ -24,22 +25,45 @@ class Molecular.Engine extends atom.Game
   update: (dt) ->
     if atom.input.released 'click'
       @app.click(atom.input.mouse)
-
     @app.update()
   draw: ->
-    @app.draw()
+    @app.render()
+
+#
+#   molecular view
+#     -- currently has a single bound backbone view which it renders
+#        and routes clicks to...
+#
+#class Molecular.App
+#  constructor: ->
+#    @setup()
+#
+#  setup: ->
+#    @engine = new Molecular.Engine @
+#
+#  run: ->
+#    @engine.run()
+#
+#  draw: ->
+#    @view.render()
+#
+#  click: (mouse) ->
+#    @view.click(mouse)
+#
+#  update: -> # override if not static
+
+
+# --- the rest of this is really just helpers...
 
 #
 #   molecular sync!
 #     -- really just a lightweight wrapper around backbone sync / faye at this point
 #     -- could be much more interesting (!)
 #
-Molecular.Sync = {
-  subscribe: (model, channel) ->
+Molecular.sync = (model, channel) ->
     new BackboneSync.RailsFayeSubscriber model,
       channel: channel
-      client: new Faye.Client(Molecular.Sync.FayeServer)
-}
+      client: new Faye.Client(FayeServer)
 
 #
 #   Molecular.Canvas
@@ -105,26 +129,10 @@ class Molecular.Canvas.Ellipse extends Molecular.Canvas.Path
     super(@opts)
     @radius = @opts['radius'] or= 3
 
-  draw: ->
+  draw: (render_opts) ->
+    @x = @opts['x'] or= (render_opts['x'] or= 0)
+    @y = @opts['y'] or= (render_opts['y'] or= 0)
+    @radius = @opts['radius'] or= (render_opts['radius'] or= 3)
     atom.context.arc @x, @y, @radius, 0, 2*Math.PI, false
 
-#
-#   molecular view
-#     -- currently has a single bound backbone view which it renders
-#        and routes clicks to...
-#
-class Molecular.App
-  constructor: ->
-    @setup()
 
-  setup: ->
-    @engine = new Molecular.Engine @
-
-  run: ->
-    @engine.run()
-
-  draw: ->
-    @view.render()
-
-  click: (mouse) ->
-    @view.click(mouse)
