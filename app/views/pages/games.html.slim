@@ -1,22 +1,32 @@
-canvas style="z-index: 0; margin-top:0"
+canvas#universe
   = javascript_include_tag :atom, :molecular
 
 
-/div.page-header style="z-index:1; margin: 0 20px; position: absolute; opacity: 0.9"
-/  h1 Games
-/  p A list of games might be here...
-/
-.hero-unit style="z-index:1; margin: 0 20px; position: absolute; opacity: 0.9"
-  h1 Our Games
-  h3
-    span A list of Zephyr games might be here...
+.btn.btn-primary.btn-large.toggle-me Toggle Me
 
-  p We definitely want to put together a simple pong-style arcade game with multiplayer/automatch functionality, and have that be pretty straightforward to use.
-  p We also want to do larger simulations/systems, as well as RPGs. Definitely watch this space! :)
+.hero-unit.welcome-traveller
+  h1 Welcome back, friend.
+  .project-copy
+    h3
+      span You're at the internal homepage of&nbsp
+      a href="https://github.com/jweissman/zephyr" Zephyr
+      span 's demo app.
+    p Zephyr is an awesome open-source system for making canvas games in Ruby and Coffeescript.  As before if you click on the canvas behind this hero unit, you can create a star, and anyone else connected to this page can also see the star you've just created.
+    p The system currently leverages websockets for broadcasting, with Rails and Backbone providing smooth syncing of models.
+    b Our goal is a sweet and simple multiplayer canvas game framework.
+    p (A list of games might eventually go here...)
+
+    - if can? :destroy_all, Star
+      p Oh, alright.
+      = link_to 'Destroy All', destroy_all_stars_path, remote: true, method: :get, class: 'btn btn-warning'
 
 javascript:
   faye_server = "#{Zephyr::Application.config.faye_secure_server}";
 coffee:
   Molecular.Sync.FayeServer = faye_server
+  $(".toggle-me").click ->
+    $(".toggle-me").addClass "active"
+    $(".project-copy").toggle()
+
 
 = javascript_include_tag :universe
