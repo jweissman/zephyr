@@ -1,15 +1,17 @@
 class Zephyr.Views.StarView extends Backbone.View
-  radius: 1.5
-  initialize: ->
-  star: (x,y) -> new Molecular.Canvas.Ellipse x,y, {
-    radius: @radius
-    line_width: 0
-    blur: 8
-    stroke_style: 'grey'
-    fill_style: 'white'
-    shadow_color: 'white'
-    glowing: true
-  }
+  star: (x,y,r) ->
+    (new Molecular.Canvas.Ellipse(x,y,
+      radius: r
+      line_width: 0.2
+      blur: 3
+      stroke_style: 'white'
+      fill_style: 'white'
+      shadow_color: 'white'
+      glowing: true
+    )).inscribe()
 
   render: ->
-    @star(@model.get('x'), @model.get('y')).inscribe()
+    @star(@model.get('x'), @model.get('y'),@model.get('radius'))
+
+
+

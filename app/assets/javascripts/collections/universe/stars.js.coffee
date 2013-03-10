@@ -5,21 +5,8 @@ class Zephyr.Collections.Stars extends Backbone.Collection
   initialize: ->
     Molecular.Sync.subscribe @, 'stars'
 
-  create: (x,y) ->
-    newborn_star = new Star
-      star:
-        x: x
-        y: y
-#    @add(newborn_star)
-    newborn_star.save()
-
-  render: ->
-    @each (model) ->
-      model.render()
+  addOne: (x,y) ->
+    (new Star(star:{x:x,y:y})).save()
 
   update: ->
-#    if Math.random() < 0.05
-#      @each (model) ->
-#        model.set({x: model.get('x')+ 0.5-Math.random()})
-
-
+    @each (star) -> star.wobble()

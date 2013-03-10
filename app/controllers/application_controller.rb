@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   # before_filter :require_login, except: [:not_authenticated]
 
   protect_from_forgery
-  #check_authorization
+  check_authorization
 
   protected
 

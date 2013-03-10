@@ -1,22 +1,25 @@
-class Universe extends Molecular.App
-  setup: ->
-    super
-    @collection        = Stars
-    @view              = StarsView
-
-  run: ->
-    super
-    @collection.fetch({})
-
-  update: ->
-    console.log "--- step"
-    @collection.update()
-
-# not really sure a better place to put these...
-window.Stars       = new Zephyr.Collections.Stars()
-window.StarsView   = new Zephyr.Views.StarsView {collection: Stars}
 window.Star        = Zephyr.Models.Star
 window.StarView    = Zephyr.Views.StarView
+window.Stars       = new Zephyr.Collections.Stars()
+window.StarsView   = new Zephyr.Views.StarsView
+  collection: Stars
 
-universe = new Universe
+class Universe extends atom.Game
+  constructor: ->
+    super
+    atom.input.bind atom.button.LEFT, 'click'
+
+  draw: -> StarsView.render()
+
+  update: (dt) ->
+    if atom.input.released 'click'
+      @click(atom.input.mouse)
+
+    Stars.update()
+
+  click: (mouse) ->
+    Stars.addOne(mouse.x, mouse.y)
+
+# and let go!
+universe = new Universe()
 universe.run()

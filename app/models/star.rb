@@ -1,5 +1,6 @@
 class Star < ActiveRecord::Base
   attr_accessible :active, :description, :name, :x, :y
+
   def self.faye_channel; 'stars' end
   def self.at(x,y)
     Star.new :x => x, :y => y
