@@ -8,4 +8,8 @@ class PagesController < ApplicationController
 
   def games
   end
+
+  def pong
+    redirect_to :games unless logged_in?
+  end
 end

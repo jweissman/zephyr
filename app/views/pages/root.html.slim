@@ -17,9 +17,12 @@ canvas.universe
     p The system currently leverages websockets for broadcasting, with Rails and Backbone providing smooth syncing of models.
     b Our goal is a sweet and simple multiplayer canvas game framework.
 
-    - if can? :destroy_all, Star
-      p Oh, alright.
-      = link_to 'Destroy All', destroy_all_stars_path, method: :get, class: 'btn btn-warning'
+.hero-unit.welcome-traveller
+  h1 Make something awesome!
+
+
+
+    /= link_to 'Destroy All', destroy_all_stars_path, method: :get, class: 'btn btn-warning'
 
 
 javascript:

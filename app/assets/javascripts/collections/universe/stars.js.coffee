@@ -5,8 +5,8 @@ class Zephyr.Collections.Stars extends Backbone.Collection
   initialize: ->
     Molecular.Sync.subscribe @, 'stars'
 
-  addOne: (x,y) ->
-    (new Star(star:{x:x,y:y})).save()
+  addOne: (x,y,layer) ->
+    (new Star(star:{x:x,y:y,layer:layer})).save()
 
   update: ->
-    @each (star) -> star.wobble()
+#    @each (star) -> star.wobble()
