@@ -163,6 +163,7 @@ GEM
       less-rails (~> 2.3.1)
     libv8 (3.11.8.13)
     listen (0.7.3)
+    lorem (0.1.2)
     lumberjack (1.0.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -350,6 +351,7 @@ DEPENDENCIES
   less-rails
   less-rails-bootstrap
   libv8 (~> 3.11.8)
+  lorem
   mailcatcher
   meta_request
   morecane

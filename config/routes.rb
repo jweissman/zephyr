@@ -11,6 +11,7 @@ Zephyr::Application.routes.draw do
 
   # demos
   match 'games' => 'pages#games', as: :games
+  match 'pong'  => 'pages#pong',  as: :pong
 
   # authentication stuff
   match 'sign_in'  => 'user_sessions#new',     as: :sign_in

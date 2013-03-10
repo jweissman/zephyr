@@ -79,6 +79,7 @@ atom.button =
   RIGHT: -3
   WHEELDOWN: -4
   WHEELUP: -5
+
 atom.key =
   TAB: 9
   ENTER: 13
@@ -106,14 +107,14 @@ eventCode = (e) ->
     else
       atom.button.WHEELDOWN
 
+atom.height_multiplier = 1.0
 window.onresize = (e) ->
-  atom.canvas.width = window.innerWidth
-  atom.canvas.height = window.innerHeight
+  atom.canvas.width = window.innerWidth #* atom.height_multiplier
+  atom.canvas.height = window.innerHeight * atom.height_multiplier
   atom.width = atom.canvas.width
   atom.height = atom.canvas.height
 
 $.ready = ->
-  console.log "--- atoms rocking!"
   atom.canvas = document.getElementsByTagName('canvas')[0]
   atom.canvas.style.position = "absolute"
   atom.canvas.style.top = "0"
@@ -127,6 +128,11 @@ $.ready = ->
   atom.canvas.oncontextmenu = atom.input.oncontextmenu.bind(atom.input)
 
   window.onresize()
+
+window.lastScrollY = 0
+window.onscroll = (e) ->
+  #console.log 'scrolllll!'
+  window.lastScrollY = window.scrollY
 
 class Game
   constructor: ->
