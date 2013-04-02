@@ -2,6 +2,8 @@
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
+# Full of Stars
+
 Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that can be
 created with a click. These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to
 clients so that the star field async updates for anyone on the page.
@@ -14,6 +16,15 @@ It's all relatively fast, as such things go, but I think we'll definitely want t
  want to observe server-side. Eventually we're looking to include a few "classic" game demos like Pong and a roguelike
  example, maybe using rot.js. One goal for this is to try to help identify and extract the platform and services we'll
  need for larger multiplayer systems.
+
+# Multiplayer Pong
+
+This is the next major target. We're currently building out a node.js 'game' server which can keep track of
+
+- the lobby and matchmaking services, and
+- simulation (authority over) game state
+
+With this in place we should be able to setup games and arbitrate them with an independent server process. Eventually it would be nice to extend this to doing things like auditing client logs for cheating, etc.
 
 # Requirements
 

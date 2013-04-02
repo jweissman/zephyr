@@ -10,7 +10,9 @@ Zephyr::Application.routes.draw do
   root to: 'pages#root'
 
   # demos
+  match 'lobby' => 'pages#lobby', as: :lobby
   match 'games' => 'pages#games', as: :games
+  match 'pong'  => 'pages#pong',  as: :pong
 
   # authentication stuff
   match 'sign_in'  => 'user_sessions#new',     as: :sign_in

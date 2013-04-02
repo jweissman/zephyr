@@ -13,10 +13,22 @@ canvas#universe
     p The system currently leverages websockets for broadcasting, with Rails and Backbone providing smooth syncing of models.
     b Our goal is a sweet and simple multiplayer canvas game framework.
     p (A list of games might eventually go here...)
+    h3 Pong!
+    p Check out our Pong game.
+    span Check out our&nbsp
+    a href=pong_path Pong
+    span &nbsp"hello world" game.
+
+    h4 Lorem!
+    p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus vitae risus vitae lorem iaculis placerat. Aliquam sit amet felis. Etiam congue. Donec risus risus, pretium ac, tincidunt eu, tempor eu, quam. Morbi blandit mollis magna. Suspendisse eu tortor. Donec vitae felis nec ligula blandit rhoncus. Ut a pede ac neque mattis facilisis. Nulla nunc ipsum, sodales vitae, hendrerit non, imperdiet ac, ante. Morbi sit amet mi. Ut magna. Curabitur id est. Nulla velit. Sed consectetuer sodales justo. Aliquam dictum gravida libero. Sed eu turpis. Nunc id lorem. Aenean consequat tempor mi. Phasellus in neque. Nunc fermentum convallis ligula.
+    h3 Ipsum!
+    p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus vitae risus vitae lorem iaculis placerat. Aliquam sit amet felis. Etiam congue. Donec risus risus, pretium ac, tincidunt eu, tempor eu, quam. Morbi blandit mollis magna. Suspendisse eu tortor. Donec vitae felis nec ligula blandit rhoncus. Ut a pede ac neque mattis facilisis. Nulla nunc ipsum, sodales vitae, hendrerit non, imperdiet ac, ante. Morbi sit amet mi. Ut magna. Curabitur id est. Nulla velit. Sed consectetuer sodales justo. Aliquam dictum gravida libero. Sed eu turpis. Nunc id lorem. Aenean consequat tempor mi. Phasellus in neque. Nunc fermentum convallis ligula.
+    p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus vitae risus vitae lorem iaculis placerat. Aliquam sit amet felis. Etiam congue. Donec risus risus, pretium ac, tincidunt eu, tempor eu, quam. Morbi blandit mollis magna. Suspendisse eu tortor. Donec vitae felis nec ligula blandit rhoncus. Ut a pede ac neque mattis facilisis. Nulla nunc ipsum, sodales vitae, hendrerit non, imperdiet ac, ante. Morbi sit amet mi. Ut magna. Curabitur id est. Nulla velit. Sed consectetuer sodales justo. Aliquam dictum gravida libero. Sed eu turpis. Nunc id lorem. Aenean consequat tempor mi. Phasellus in neque. Nunc fermentum convallis ligula.
 
     - if can? :destroy_all, Star
       p Oh, alright.
-      = link_to 'Destroy All', destroy_all_stars_path, remote: true, method: :get, class: 'btn btn-warning'
+      = link_to 'Destroy All', destroy_all_stars_path, remote: true, method: :get, class: 'btn btn-warning btn-large'
+
 
 javascript:
   faye_server = "#{Zephyr::Application.config.faye_secure_server}";
@@ -25,6 +37,7 @@ coffee:
   $(".toggle-me").click ->
     $(".toggle-me").addClass "active"
     $(".project-copy").toggle()
+
 
 
 = javascript_include_tag :universe

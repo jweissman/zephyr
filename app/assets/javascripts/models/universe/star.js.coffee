@@ -2,12 +2,11 @@ class Zephyr.Models.Star extends Backbone.Model
   url: ->
     (if @id then "/stars/" + @id else "/stars")
 
-  initialize: -> @on('add', @cleanup)
-
   defaults:
     star:
-#      x: 0
-#      y: 0
+      x: 0
+      y: 0
+      layer: 2
       active: true
       description: 'a normal little star'
       name: 'Some Star'

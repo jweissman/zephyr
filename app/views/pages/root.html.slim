@@ -14,12 +14,19 @@ canvas.universe
       span Click on the canvas behind this hero unit to create a new star.&nbsp
       b Anyone else connected to this page can also see the star you've just created.
 
-    p The system currently leverages websockets for broadcasting, with Rails and Backbone providing smooth syncing of models.
+    p The system currently leverages websockets for broadcasting, with Rails, Faye and Backbone.js providing smooth syncing of front-end models.
     b Our goal is a sweet and simple multiplayer canvas game framework.
 
-    - if can? :destroy_all, Star
-      p Oh, alright.
-      = link_to 'Destroy All', destroy_all_stars_path, method: :get, class: 'btn btn-warning'
+    h3 Full of Stars
+
+    p Currently, the root points at the 'full of stars' proof of concept you're looking at, which displays some canvas entities that can be created with a click. These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to clients so that the star field async updates for anyone on the page. It might be especially interesting to watch the #destroy_all operation running over the stars -- you can watch them wink out! (Requires admin access in the demo currently, but feel free to clone/fork your own! There's lots of notes on Github on getting started but please do raise issues if you run into roadblocks. Note running this demo does require having a running Faye server somewhere in the cloud; a link to a suitable OpenShift DIY instance can be found on Github.) It's all relatively fast, as such things go, but I think we'll definitely want to limit the number of model changes we want to observe server-side. Eventually we're looking to include a few "classic" game demos like Pong and a roguelike example, maybe using rot.js. One goal for this is to try to help identify and extract the platform and services we'll need for larger multiplayer systems.
+
+    h3 Multiplayer Pong
+    p This is the next major target. We're currently building out a node.js 'game' server which can keep track of
+    ul
+      li the lobby and matchmaking services, and
+      li simulation (authority over) game state
+    p With this in place we should be able to setup games and arbitrate them with an independent server process. Eventually it would be nice to extend this to doing things like auditing client logs for cheating, etc.
 
 
 javascript:
