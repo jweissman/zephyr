@@ -21,6 +21,13 @@ gem 'thor'
 gem 'unicorn'
 gem 'valid_email'
 
+# gems for ontology/zeronaut
+gem 'rjr'
+gem 'eventmachine'
+gem 'amqp'
+gem 'curb'
+gem 'eventmachine_httpserver', :require => 'evma_httpserver'
+
 # asset gems
 group :assets do
   gem 'coffee-rails'

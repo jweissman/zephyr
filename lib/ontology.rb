@@ -1,5 +1,9 @@
-module Ontology
-end
+#module Ontology; end
+#
+#require "ontology/driver"
+#require "ontology/world"
+#require "ontology/world_server"
+#require "ontology/zeronaut"
 
 # launch worlds server...
 #Ontology::Driver.launch!

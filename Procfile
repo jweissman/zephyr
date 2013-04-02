@@ -1,3 +1,3 @@
 web:     rails server -p $PORT
-world:   ruby lib/ontology/driver.rb
-game:    ruby lib/ontology/zeronaut.rb
+world:   rails runner "require 'world'; WorldDriver.launch!"
+game:    rails runner "require 'zeronaut'; Zeronaut.launch!"
