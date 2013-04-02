@@ -5,8 +5,8 @@ class Zephyr.Views.StarView extends Backbone.View
   star: (x,y) ->
     (new Molecular.Canvas.Ellipse x, StarView.relativeToAbsoluteY(y,@model.get('layer')),
       radius: 1
-      line_width: 0.2
-      blur: 5
+      line_width: 0
+      blur: 3 * @model.get('layer')
       stroke_style: 'white'
       fill_style: if @model.get('layer') == 1 then 'white' else 'lightgrey'
       shadow_color: 'white'

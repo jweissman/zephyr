@@ -10,6 +10,7 @@ Zephyr::Application.routes.draw do
   root to: 'pages#root'
 
   # demos
+  match 'lobby' => 'pages#lobby', as: :lobby
   match 'games' => 'pages#games', as: :games
   match 'pong'  => 'pages#pong',  as: :pong
 

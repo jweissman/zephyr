@@ -2,8 +2,6 @@ class Zephyr.Models.Star extends Backbone.Model
   url: ->
     (if @id then "/stars/" + @id else "/stars")
 
-#  initialize: -> @on('add', @assignLayer)
-
   defaults:
     star:
       x: 0
@@ -15,9 +13,6 @@ class Zephyr.Models.Star extends Backbone.Model
 
   wobble: ->
     @set('x', @get('x') + (0.5 - Math.random()))
-
-#  assignLayer: ->
-#    @set('layer', Math.floor(Math.random*3))
 
 
 
