@@ -1,13 +1,13 @@
 # Use 'createuser -s postgres' to create a general purpose db (super)user.
 
 development: &default
+  adapter: sqlite3
+  database: db/development.sqlite3
+
+test:
   adapter: postgresql
-  database: zephyr_development
+  database: zephyr_test
   username: postgres
   pool: 5
   timeout: 5000
-
-test:
-  <<: *default
-  database: zephyr_test
   min_messages: warning

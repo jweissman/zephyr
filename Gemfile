@@ -12,7 +12,6 @@ gem 'backbone_sync-rails'
 gem 'cancan'
 gem 'faye'
 gem 'jquery-rails'
-gem 'pg'
 gem 'rails', '~> 3.2.12'
 gem 'simple_form'
 gem 'slim-rails'
@@ -27,6 +26,10 @@ gem 'eventmachine'
 gem 'amqp'
 gem 'curb'
 gem 'eventmachine_httpserver', :require => 'evma_httpserver'
+
+group :production, :test do
+  gem 'pg'
+end
 
 # asset gems
 group :assets do
@@ -56,6 +59,7 @@ end
 
 # dev gems
 group :development do
+  gem 'sqlite3'
   gem 'foreman'
   gem 'growl'
   gem 'guard'

@@ -383,6 +383,7 @@ DEPENDENCIES
   simplecov
   slim-rails
   sorcery
+  sqlite3
   therubyracer
   thor
   timecop
