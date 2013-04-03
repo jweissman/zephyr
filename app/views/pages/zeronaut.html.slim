@@ -1,0 +1,15 @@
+h1 Okay.....!
+p Demonstrate we're talking to Zeronaut...
+
+canvas#zeronaut
+
+javascript:
+  console.log("attempting to open node connection...");
+  var node = new WSNode('127.0.0.1', '8080');
+  node.onopen = function(){
+    node.invoke_request('hello', 'rjr');
+  };
+  node.onsuccess = function(result){
+    alert(result);
+  };
+  node.open();

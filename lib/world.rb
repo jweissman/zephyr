@@ -4,7 +4,7 @@ require 'rpc'
 Rails.logger = Logger.new(STDOUT) # for sanity's sake at least while debugging
 #Rails.logger.auto_flushing = true
 #Rails.logger.info "HELLO WORLD"
-puts "HL#RLHELLOOOO"
+#puts "HL#RLHELLOOOO"
 
 class World # < Ontology::Core::Simulation
   attr_reader :state

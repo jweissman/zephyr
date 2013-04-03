@@ -14,6 +14,8 @@ Zephyr::Application.routes.draw do
   match 'games' => 'pages#games', as: :games
   match 'pong'  => 'pages#pong',  as: :pong
 
+  match 'zero'  => 'pages#zeronaut', as: :zeronaut
+
   # authentication stuff
   match 'sign_in'  => 'user_sessions#new',     as: :sign_in
   match 'sign_out' => 'user_sessions#destroy', as: :sign_out

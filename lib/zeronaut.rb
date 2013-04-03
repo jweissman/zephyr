@@ -4,7 +4,7 @@
 Rails.logger = Logger.new(STDOUT) # for sanity's sake at least while debugging
 #Rails.logger.auto_flushing = true
 
-puts "HL#RLHELLOOOO"
+#puts "HL#RLHELLOOOO"
 
 
 class Zeronaut
@@ -30,7 +30,7 @@ class Zeronaut
     }
 
     aqmp_node   = RJR::AMQPNode.new :node_id => 'worlds-server', :broker => 'localhost'
-    ws_node     = RJR::WSNode.new   :node_id => 'worlds-server', :host => 'localhost', :port => 9000
+    ws_node     = RJR::WSNode.new   :node_id => 'worlds-server', :host => 'localhost', :port => 8080
     ws_node.listen
     ws_node.join
 

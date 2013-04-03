@@ -19,6 +19,10 @@ class PagesController < ApplicationController
     #redirect_to :sign_in unless logged_in?
   end
 
+  def zeronaut
+
+  end
+
   protected
 
   def require_sign_in
