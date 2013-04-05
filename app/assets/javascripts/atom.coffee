@@ -129,6 +129,8 @@ $.ready = ->
 
   window.onresize()
 
+  Molecular.launch()
+
 window.lastScrollY = 0
 window.onscroll = (e) ->
   #console.log 'scrolllll!'

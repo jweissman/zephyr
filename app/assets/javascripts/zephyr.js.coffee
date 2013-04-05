@@ -4,10 +4,22 @@ window.Zephyr =
   Views: {}
   Routers: {}
 
+  # custom stuff...?
+  Game: {
+    Callbacks: {}
+  }
+
   initialize: ->
     Backbone.history.start(pushState: false)
 
-$(document).ready ->
+#console.log $
+#$(document).ready ->
+Zephyr.launch = ->
+#$ ->
+  console.log "=== ZEPHYR LOAD ---"
+  window.Assets = new AssetManager()
+  #  console.log window.Assets
+  Zephyr.Game.Callbacks.bootstrap()
   Zephyr.initialize()
 
 

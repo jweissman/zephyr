@@ -1,15 +1,49 @@
 h1 Okay.....!
 p Demonstrate we're talking to Zeronaut...
 
+form
+  /! <label>Nick</label>
+  /! <input type='text' autofocus='true' id='nick' name='nick' value='anon' size='20' /><br />
+  label Message
+  /= succeed "&nbsp;" do
+  input#message autofocus="true" name="message" size="80" type="text" value=""
+  input#submit type="submit"
+#debug
+#msg
+
 canvas#zeronaut
 
-javascript:
-  console.log("attempting to open node connection...");
-  var node = new WSNode('127.0.0.1', '8080');
-  node.onopen = function(){
-    node.invoke_request('hello', 'rjr');
-  };
-  node.onsuccess = function(result){
-    alert(result);
-  };
-  node.open();
+= javascript_include_tag :rpg_zero
+
+coffee:
+  debug = (str) ->
+    $("#debug").append "<p>" + str + "</p>"
+  nickname = 'blah' #prompt("what shall thy nickname be, warrior?")
+  unless "WebSocket" of window
+    alert "We're sorry, but WebSockets are not available in this browser."
+    return
+  ws = new WebSocket("ws://zephyr-breeze.local:9000/ws")
+
+  ws.onmessage = (evt) ->
+    $("#msg").append "<p>" + evt.data + "</p>"
+
+  ws.onclose = ->
+    debug "socket closed"
+
+  ws.onopen = ->
+    debug "connected, sending 'world' command..."
+    result = ws.send(JSON.stringify(
+      command: "world"
+      nickname: nickname
+    ))
+    console.log result
+
+  $("#submit").click ->
+    nick = nickname #$('#nick').val();
+    msg = $("#message").val()
+    ws.send JSON.stringify(
+      command: "chat"
+      nickname: nickname
+      message: msg
+    )
+    false

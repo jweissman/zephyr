@@ -9,12 +9,13 @@ root.Molecular = Molecular = Zephyr.Molecular = {}
 
 # yay, molecular banner! :D
 
-console.log "                .__                      .__"
-console.log "   _____   ____ |  |   ____   ____  __ __|  | _____ _______"
-console.log "  /     \\ /    \\|  | _/ __ \\_/ ___\\|  |  \\  | \\__  \\_  __  \\"
-console.log " |  Y Y  (  <_> )  |_\\  ___/\\  \\___|  |  /  |__/ __ \\|  | \/"
-console.log " |__|_|  /\\____/|____/\\___  >\\___  >____/|____(____  /__|"
-console.log "       \\/                 \\/     \\/                \\/"
+Molecular.banner = ->
+  console.log "                .__                      .__"
+  console.log "   _____   ____ |  |   ____   ____  __ __|  | _____ _______"
+  console.log "  /     \\ /    \\|  | _/ __ \\_/ ___\\|  |  \\  | \\__  \\_  __  \\"
+  console.log " |  Y Y  (  <_> )  |_\\  ___/\\  \\___|  |  /  |__/ __ \\|  | \/"
+  console.log " |__|_|  /\\____/|____/\\___  >\\___  >____/|____(____  /__|"
+  console.log "       \\/                 \\/     \\/                \\/"
 
 
 #
@@ -116,10 +117,9 @@ class Canvas.Ellipse extends Canvas.Path
 
 
 #
-# constructor for drawing rectangles (starting to get tired of this huge namespace...)
+# constructor for drawing rectangles
 #
 class Canvas.Rectangle extends Canvas.Path
-#  construct: (@x,@y,@opts) ->
   draw: ->
     @width = @opts['width'] or= 3
     @height = @opts['height'] or= 4
@@ -130,9 +130,19 @@ class Canvas.Text extends Canvas.Path
     @msg = @opts['msg'] or= 'hello world';
     @font = @opts['font'] or= 'bold 16px Arial';
     atom.context.font = @font;
-#    console.log "--- using font #{@font}"
     atom.context.fillText(@msg, @x, @y);
+
 
 
 Canvas.text = (x,y,msg,opts) -> (new Canvas.Text(x,y,$.extend(opts, {msg: msg}))).inscribe()
 Canvas.clear = -> atom.context.clearRect 0,0,atom.width,atom.height
+
+
+window.assets = assets = {}
+
+Molecular.launch = ->
+  # yo!
+  Molecular.banner()
+  Zephyr.launch()
+
+

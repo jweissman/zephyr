@@ -1,0 +1,3 @@
+[submodule "lib/ontology"]
+	path = lib/ontology
+	url = git://github.com/jweissman/ontology.git

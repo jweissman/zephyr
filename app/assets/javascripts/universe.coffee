@@ -1,8 +1,3 @@
-window.Star        = Zephyr.Models.Star
-window.StarView    = Zephyr.Views.StarView
-window.Stars       = new Zephyr.Collections.Stars()
-window.StarsView   = new Zephyr.Views.StarsView
-  collection: Stars
 
 class Universe extends atom.Game
   constructor: ->
@@ -26,7 +21,16 @@ class Universe extends atom.Game
     inverseY = StarView.absoluteToRelativeY(mouse.y, layer)
     Stars.addOne(mouse.x, inverseY, layer)
 
-# and let go!
-atom.height_multiplier = 2
-universe = new Universe()
-universe.run()
+Zephyr.Game.Callbacks.bootstrap = ->
+  console.log "=== universe booting up!"
+  window.Star        = Zephyr.Models.Star
+  window.StarView    = Zephyr.Views.StarView
+  window.Stars       = new Zephyr.Collections.Stars()
+  window.StarsView   = new Zephyr.Views.StarsView
+    collection: Stars
+
+  # and let go!
+
+  atom.height_multiplier = 2
+  universe = new Universe()
+  universe.run()

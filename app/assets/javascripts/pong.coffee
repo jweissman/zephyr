@@ -2,7 +2,6 @@ window.Paddle       = Zephyr.Models.Paddle
 window.Ball         = Zephyr.Models.Ball
 window.Score        = Zephyr.Models.Score
 
-
 #window.PongView     = new Zephyr.Views.PongView({})
 # ......
 
