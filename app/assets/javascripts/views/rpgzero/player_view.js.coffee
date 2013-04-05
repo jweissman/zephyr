@@ -1,5 +1,5 @@
-class Zephyr.Views.WorldView extends Backbone.View
+class Zephyr.Views.PlayerView extends Backbone.View
   map: ->
     # draw map...?
 
-  render: -> @map()
+#  render: -> @map()

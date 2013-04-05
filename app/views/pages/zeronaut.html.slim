@@ -1,6 +1,10 @@
 h1 Okay.....!
 p Demonstrate we're talking to Zeronaut...
 
+canvas#zeronaut
+
+
+
 form
   /! <label>Nick</label>
   /! <input type='text' autofocus='true' id='nick' name='nick' value='anon' size='20' /><br />
@@ -8,42 +12,21 @@ form
   /= succeed "&nbsp;" do
   input#message autofocus="true" name="message" size="80" type="text" value=""
   input#submit type="submit"
-#debug
-#msg
 
-canvas#zeronaut
+#msg
 
 = javascript_include_tag :rpg_zero
 
+
+javascript:
+  window.nickname = "#{current_user.name}"
+
 coffee:
-  debug = (str) ->
-    $("#debug").append "<p>" + str + "</p>"
-  nickname = 'blah' #prompt("what shall thy nickname be, warrior?")
-  unless "WebSocket" of window
-    alert "We're sorry, but WebSockets are not available in this browser."
-    return
-  ws = new WebSocket("ws://zephyr-breeze.local:9000/ws")
 
-  ws.onmessage = (evt) ->
-    $("#msg").append "<p>" + evt.data + "</p>"
+  $(document).ready ->
+    ontology.on 'chat', (data) ->
+      $("#msg").append "<p>" + data['message'] + "</p>"
 
-  ws.onclose = ->
-    debug "socket closed"
-
-  ws.onopen = ->
-    debug "connected, sending 'world' command..."
-    result = ws.send(JSON.stringify(
-      command: "world"
-      nickname: nickname
-    ))
-    console.log result
-
-  $("#submit").click ->
-    nick = nickname #$('#nick').val();
-    msg = $("#message").val()
-    ws.send JSON.stringify(
-      command: "chat"
-      nickname: nickname
-      message: msg
-    )
-    false
+    $("#submit").click ->
+      ontology.chat $("#message").val()
+      false

@@ -174,11 +174,11 @@ class Canvas.Image
 #  atom.context.restore()
 
 
-window.assets = assets = {}
+#window.assets = assets = {}
 
-Molecular.launch = ->
-  # yo!
-  Molecular.banner()
-  Zephyr.launch()
+#Molecular.launch = ->
+#  # yo!
+#  Molecular.banner()
+#  Zephyr.launch()
 
 

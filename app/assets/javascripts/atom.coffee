@@ -114,7 +114,8 @@ window.onresize = (e) ->
   atom.width = atom.canvas.width
   atom.height = atom.canvas.height
 
-$.ready = ->
+$(document).ready ->
+  console.log "--- atom start"
   atom.canvas = document.getElementsByTagName('canvas')[0]
   atom.canvas.style.position = "absolute"
   atom.canvas.style.top = "0"
@@ -129,7 +130,7 @@ $.ready = ->
 
   window.onresize()
 
-  Molecular.launch()
+#  Molecular.launch()
 
 window.lastScrollY = 0
 window.onscroll = (e) ->

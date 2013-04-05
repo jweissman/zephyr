@@ -24,5 +24,4 @@
 //= require_tree ./support
 //= require atom
 //= require molecular
-//= require support/assets
 //= require json
