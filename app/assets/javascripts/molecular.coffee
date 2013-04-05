@@ -138,6 +138,42 @@ Canvas.text = (x,y,msg,opts) -> (new Canvas.Text(x,y,$.extend(opts, {msg: msg}))
 Canvas.clear = -> atom.context.clearRect 0,0,atom.width,atom.height
 
 
+class Canvas.Image
+  constructor: (@image) ->
+    @cached_image = Canvas.Image.cache(@image)
+
+  draw: (x,y) ->
+    sprite = @cached_image
+    atom.context.save()
+    atom.context.translate x, y
+    atom.context.drawImage sprite, -sprite.width/2, sprite.height/2
+    atom.context.restore()
+
+  @cache: (image) ->
+    console.log "--- attempting to cache image:"
+    console.log(image)
+    offscreenCanvas = document.createElement("canvas")
+    size = Math.max(image.width, image.height)
+    offscreenCanvas.width = size
+    offscreenCanvas.height = size
+    offscreenCtx = offscreenCanvas.getContext("2d")
+    offscreenCtx.save()
+    offscreenCtx.translate size / 2, size / 2
+    #    offscreenCtx.rotate angle + Math.PI / 2
+    offscreenCtx.translate 0, 0
+    offscreenCtx.drawImage image, -(image.width / 2), -(image.height / 2)
+    offscreenCtx.restore()
+    return offscreenCanvas
+
+
+
+#Canvas.image = (x,y,sprite,opts) ->
+#  atom.context.save()
+#  atom.context.translate x, y
+#  atom.drawImage @sprite, -@sprite.width/2, @sprite.height/2
+#  atom.context.restore()
+
+
 window.assets = assets = {}
 
 Molecular.launch = ->

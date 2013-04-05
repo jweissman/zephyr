@@ -1,5 +1,5 @@
 unless Rails.env.production?
-  localhost, faye_port = 'localhost', '9292'
+  localhost, faye_port = `hostname`.chomp, '9292'
   ENV['ZEPHYR_FAYE_HOST']        ||= localhost
   ENV['ZEPHYR_FAYE_PORT']        ||= faye_port
   ENV['ZEPHYR_SECURE_FAYE_HOST'] ||= localhost
