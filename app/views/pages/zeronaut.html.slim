@@ -3,8 +3,6 @@ p Demonstrate we're talking to Zeronaut...
 
 canvas#zeronaut
 
-
-
 form
   /! <label>Nick</label>
   /! <input type='text' autofocus='true' id='nick' name='nick' value='anon' size='20' /><br />
@@ -20,12 +18,14 @@ form
 
 javascript:
   window.nickname = "#{current_user.name}"
+  window.ontology_host = "#{Zephyr::Application.config.ontology_host}"
 
 coffee:
 
   $(document).ready ->
+
     ontology.on 'chat', (data) ->
-      $("#msg").append "<p>" + data['message'] + "</p>"
+      $("#msg").append "<p>" + data['player'] + ":" + data['message'] + "</p>"
 
     $("#submit").click ->
       ontology.chat $("#message").val()

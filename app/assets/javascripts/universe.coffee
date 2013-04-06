@@ -16,7 +16,7 @@ class Universe extends atom.Game
     inverseY = StarView.absoluteToRelativeY(mouse.y, layer)
     Stars.addOne(mouse.x, inverseY, layer)
 
-Zephyr.Game.Callbacks.bootstrap = ->
+$(document).ready ->
   console.log "=== universe booting up!"
   window.Star        = Zephyr.Models.Star
   window.StarView    = Zephyr.Views.StarView

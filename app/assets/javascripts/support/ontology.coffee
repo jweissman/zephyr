@@ -1,9 +1,9 @@
 root = (exports ? this)
 class root.Ontology
   constructor: (@host, @port, @username) ->
-#    unless "WebSocket" of window
-#      alert "We're sorry, but WebSockets are not available in this browser."
-#      return
+    unless "WebSocket" of window
+      alert "We're sorry, but WebSockets are not available in this browser."
+      return
     @ws = new WebSocket("ws://#{@host}:#{@port}/ws")
     @ws.onopen    = (evt) => @handleOpen()
     @ws.onmessage = (evt) => @handleMessage(evt)
@@ -28,7 +28,7 @@ class root.Ontology
 
   bye:  ->
     console.log "--- BYE!"
-    sendCommand("bye")
+    @sendCommand("bye")
 
   on: (evt,cb) ->
     console.log "--- callback registered: #{evt}"
@@ -36,18 +36,12 @@ class root.Ontology
     @callbacks[evt].push(cb)
 
   handleMessage: (msg) ->
-    console.log "=== GOT MESSAGE YO!"
-    console.log(msg)
-#    data = msg.data
-    data = JSON.parse(msg.data)
-    console.log "--- got data: "
-    console.log(data)
-    command = data['command']
-    console.log "=== COMMAND: #{command}"
-    for cb in @callbacks[command]
-      cb(data)
-
-
+    try
+      data = JSON.parse(msg.data)
+      for cb in @callbacks[data['command']]
+        cb(data)
+    catch error
+      console.log "--- encountering an error attempting to parse websocket message: #{msg}"
 
   sendCommand: (cmd, opts) =>
     base_command_elements = {command: cmd, user: @username}
