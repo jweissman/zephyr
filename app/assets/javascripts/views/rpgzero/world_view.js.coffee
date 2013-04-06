@@ -19,18 +19,30 @@ class Zephyr.Views.WorldView extends Backbone.View
     @world_map = []
     @players = []
     ontology.on 'join', (data) =>
-      console.log "--- ONTOLOGY WORLD VIEW JOIN!!!"
+      console.log "--- ONTOLOGY WORLD VIEW JOIN!!!!"
       console.log data
       @world_map = data['map']
       @players   = data['players']
 
     ontology.on 'move', (data) =>
       @players
+#
+#  decodeMap: (data) ->
+#    real_map = []
+#    for row, y in data
+#      real_map[y].push(1)
+#      for element, x in data
+##        real_map[y].push
+#        real_map[y].push(mapCell(element))
+#        # cell
+#      real_map[y].push(1)
+#      # row separator
+#  mapCell: (el) ->
 
   dereferenceSprite: (code) ->
     switch code
-      when 0 then @sprites['floor']
-      else @sprites['steel']
+      when 0 then @sprites['steel']
+      else @sprites['floor']
 
 
 
@@ -53,14 +65,3 @@ class Zephyr.Views.WorldView extends Backbone.View
       pos = player['position']
       # interesting: different ideas of a point on the FE...
       @sprites['warrior'].draw(pos[0]*@tileSize,pos[1]*@tileSize)
-#      [[0,1,1,0,1,1,0],
-#              [1,1,1,0,1,1,0],
-#              [1,1,0,1,1,0,0],
-#              [1,0,0,0,0,1,1],
-#              [1,1,1,1,1,1,0],
-#              [0,1,1,0,1,1,0],
-#              [0,1,1,1,0,1,1],
-#              [1,1,0,1,1,0,0],
-#              [0,0,0,1,1,1,1],
-#              [1,1,1,1,1,1,0]])
-
