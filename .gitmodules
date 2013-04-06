@@ -1,3 +1,6 @@
 [submodule "lib/ontology"]
 	path = lib/ontology
 	url = git://github.com/jweissman/ontology.git
+[submodule "lib/minotaur"]
+	path = lib/minotaur
+	url = git://github.com/deepcerulean/minotaur.git

@@ -29,8 +29,8 @@ class Zephyr.Views.WorldView extends Backbone.View
 
   dereferenceSprite: (code) ->
     switch code
-      when 0 then @sprites['steel']
-      when 1 then @sprites['floor']
+      when 0 then @sprites['floor']
+      else @sprites['steel']
 
 
 

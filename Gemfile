@@ -20,13 +20,6 @@ gem 'thor'
 gem 'unicorn'
 gem 'valid_email'
 
-# gems for ontology/zeronaut
-gem 'rjr'
-gem 'eventmachine'
-gem 'amqp'
-gem 'curb'
-gem 'eventmachine_httpserver', :require => 'evma_httpserver'
-
 group :production, :test do
   gem 'pg'
 end
