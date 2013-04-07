@@ -36,23 +36,20 @@ class root.Ontology
     @callbacks[evt].push(cb)
 
   handleMessage: (msg) ->
+    console.log "==== HANDLE MESSAGE"
+    console.log msg
     try
       data = JSON.parse(msg.data)
       for cb in @callbacks[data['command']]
         cb(data)
     catch error
-      console.log "--- encountering an error attempting to parse websocket message: #{msg}"
+      console.log "--- encountering an error attempting to parse websocket message: "
+      console.log msg
 
   sendCommand: (cmd, opts) =>
     base_command_elements = {command: cmd, user: @username}
     assembled_command = $.extend({},base_command_elements,opts)
-
-    console.log "--- would be sending assembled command: "
-    console.log assembled_command
-
     stringified_command = JSON.stringify(assembled_command)
-#    @ws.send(JSON.stringify(assembled_command))
-
     console.log stringified_command
     @xmit stringified_command
 
