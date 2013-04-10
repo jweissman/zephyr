@@ -1,6 +1,7 @@
+
 root = (exports ? this)
 class root.Ontology
-  constructor: (@host, @port, @username) ->
+  constructor: (@host, @port, @player_id, @player_name) -> #, @username) ->
     unless "WebSocket" of window
       alert "We're sorry, but WebSockets are not available in this browser."
       return
@@ -8,27 +9,40 @@ class root.Ontology
     @ws.onopen    = (evt) => @handleOpen()
     @ws.onmessage = (evt) => @handleMessage(evt)
     @ws.onclose   = (evt) => @handleClose()
-
     @callbacks = {}
 
-  handleClose: -> @bye()
-  handleOpen: => @join()
+  handleClose: ->
+    console.log "--- WEBSOCKET CLOSED (!!!)"
 
-  join: =>
-    console.log "--- JOIN"
-    @sendCommand("join")
+  handleOpen: => @ping()
+
+  ping: =>
+    console.log "--- PING (hello from #{player_name}!)"
+    @sendCommand("ping")
+
+  join: (world_id) => #(user_id, user_name) =>
+    console.log "--- JOIN WORLD #{world_id}"
+    @sendCommand("join", {world_id: world_id})
+
+  leave: =>
+    console.log "=== LEAVE!"
+    @sendCommand("leave")
+
+  create: (world_name) =>
+    console.log "--- CREATE WORLD #{world_name}"
+    @sendCommand("create", {world_name: world_name})
 
   chat: (msg) ->
-    console.log "--- CHAT"
+    console.log "--- CHAT #{msg}"
     @sendCommand("chat", {message: msg})
 
   move: (direction) ->
-    console.log "--- MOVE"
+    console.log "--- MOVE #{direction}"
     @sendCommand("move", {direction: direction})
 
-  bye:  ->
-    console.log "--- BYE!"
-    @sendCommand("bye")
+#  bye:  ->
+#    console.log "--- BYE!"
+#    @sendCommand("bye")
 
   on: (evt,cb) ->
     console.log "--- callback registered: #{evt}"
@@ -47,7 +61,7 @@ class root.Ontology
       console.log msg
 
   sendCommand: (cmd, opts) =>
-    base_command_elements = {command: cmd, user: @username}
+    base_command_elements = {command: cmd, player_id: @player_id, player_name: @player_name}
     assembled_command = $.extend({},base_command_elements,opts)
     stringified_command = JSON.stringify(assembled_command)
     console.log stringified_command
@@ -62,4 +76,12 @@ class root.Ontology
 
 
     true
+
+$(document).ready ->
+  console.log "=== ontology client establishing connection..."
+  if ontology_host?
+    console.log "--- establishing connection to ontology host / not joining!"
+    window.ontology = new Ontology(ontology_host,9000,player_id,player_name) #,nickname)
+#    console.log "--- attempting to join world..."
+#    ontology.join()
 

@@ -116,29 +116,69 @@ class Canvas.Ellipse extends Canvas.Path
     atom.context.stroke()
 
 
+################
+
 #
 # constructor for drawing rectangles
 #
 class Canvas.Rectangle extends Canvas.Path
+  analyze: ->
+    @width  = @opts['width']   or= 3
+    @height = @opts['height']  or= 4
+
   draw: ->
-    @width = @opts['width'] or= 3
-    @height = @opts['height'] or= 4
+    @analyze()
     atom.context.fillRect @x, @y, @width, @height
 
-class Canvas.Text extends Canvas.Path
+  # bounding-box logic; could be a separate class but until that seems urgent..
+  hit: (p) =>
+    console.log "=== requested to determine whether rectangle was hit at #{p.x}, #{p.y}!"
+    @analyze()
+    console.log "--- #{@width}x#{@height} rectangle at (#{@x}, #{@y})"
+    hit = p.x >= @x-1 && p.y >= @y-@height-1 && p.x <= @x+@width+1 && p.y < @y+1
+    console.log "--- analysis complete: #{hit}"
+    return hit
+
+#class Canvas.BoundingBox extends Canvas.Rectangle
+# TODO rethink so as to use bitmapped fonts
+# maybe a different class...
+class Canvas.Text extends Canvas.Rectangle
+  analyze: ->
+    @size       = @opts['size'] or= 10
+#    @lineHeight = opts['lineHeight'] or= 1.2
+    @font       = @opts['font'] or= @size+'px monospace' #'16px Arial'
+    @msg        = @opts['msg']  or= 'hello world'
+    @width      = atom.context.measureText(@msg).width
+    @height     = @size #* @lineHeight
+
   draw: ->
-    @msg = @opts['msg'] or= 'hello world';
-    @font = @opts['font'] or= 'bold 16px Arial';
-    atom.context.font = @font;
-    atom.context.fillText(@msg, @x, @y);
+    @analyze()
+    atom.context.font      = @font
+    atom.context.fillStyle = 'black'
+    atom.context.fillText @msg, @x, @y
+    #    console.log "=== wrote message at #{@x}, #{@y}!"
 
+Canvas.text = (x,y,msg,opts) ->
+#  console.log "=== attempting to inscribe message onto canvas..."
+#  console.log "--- message: #{msg}"
+#  console.log "--- position: #{x}, #{y}"
+  (new Canvas.Text(x,y,$.extend(opts, {msg: msg}))).inscribe()
 
-
-Canvas.text = (x,y,msg,opts) -> (new Canvas.Text(x,y,$.extend(opts, {msg: msg}))).inscribe()
 Canvas.clear = -> atom.context.clearRect 0,0,atom.width,atom.height
 
+# so, for a label we actually care that it's clickable
+# has a bounding box as ASSOCIATED canvas object to the label
+# (so that we can draw it if necessary for debug purposes)
 
-class Canvas.Image
+# static, known-text label that we can calculate hit stuff on create
+#class Canvas.Label extends Canvas.Text
+#  initialize: (msg) ->
+#    @message =
+#  draw: ->
+#    @msg = @opts['msg']
+
+
+class Canvas.Image # extends Canvas.Rectangle
   constructor: (@image) ->
     @cached_image = Canvas.Image.cache(@image)
 
@@ -150,7 +190,7 @@ class Canvas.Image
     atom.context.restore()
 
   @cache: (image) ->
-    console.log "--- attempting to cache image:"
+#    console.log "--- attempting to cache image:"
     console.log(image)
     offscreenCanvas = document.createElement("canvas")
     size = Math.max(image.width, image.height)
@@ -164,6 +204,8 @@ class Canvas.Image
     offscreenCtx.drawImage image, -(image.width / 2), -(image.height / 2)
     offscreenCtx.restore()
     return offscreenCanvas
+
+
 
 
 

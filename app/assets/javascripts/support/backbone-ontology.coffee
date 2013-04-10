@@ -1,5 +1,16 @@
-# SOON ENOUGH ..!!!!!
+# i'm no longer sure this makes sense
+# rpc duplex is good enough for communicating player input and pushing immediate 'de-structured' updates around
+# but the real thing is to push the updates regularly from the world smoothly and integrate changes to front-end models seamlessly....
+# (so the backbone-ontology adapter makes less sense in this context i think)
 
+# === earlier terrible thoughts
+##close to needing this now :) it's really the other side of the firehose stuff -- pushing updates from the clients...
+##not sure what the 'best' way to handle this is, given that client updates may have to be 'rolled back'
+##i guess it would 'repair' itself after the update, but there might be a few turns until the 'fix' replaces old positions
+##...more thought here :(
+##
+##SOON ENOUGH ..!!!!!
+#
 ####
 #Backbone Ontology Adapter
 #Version 0.0.1
@@ -36,34 +47,58 @@
 #  guid = ->
 #    S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()
 #
-#  Backbone.Ontology = window.Ontology = (name) ->
+##  Backbone.Ontology = window.Ontology = (model_id) ->
+##    @ontology = new WebSocket("ws://#{window.OntologyHost}:#{window.OntologyPort}/ws")
+##    @ontology.onopen    = (evt) => console.log "--- ONTOLOGY OPEN"
+##    @ontology.onmessage = (evt) => console.log "--- ONTOLOGY MESSAGE!!"; console.log(evt)
+##    @ontology.onclose   = (evt) => console.log "--- ONTOLOGY CLOSE"
+##
+#
+#  Backbone.Firehose = window.Firehose = (model_name, collection) ->
+##    @collection =
+#    @firehose = new Firehose.Client()
+#      .uri "//#{model_name}.json"
+#      .message (msg) => collection.add(JSON.parse(msg))
+#      .connect()
+#
+#
+#
+#
+##   Backbone.LocalStorage = window.Store = (name) ->
+#
+#
+##    @nickname = nickname
+##    connection =
 #
 #
 #  # Our Store is represented by a single JS object in *localStorage*. Create it
 #  # with a meaningful name, like the name you'd give a table.
 #  # window.Store is deprectated, use Backbone.LocalStorage instead
-#  Backbone.LocalStorage = window.Store = (name) ->
-#    @name = name
-#    store = @localStorage().getItem(@name)
-#    @records = (store and store.split(",")) or []
+##  Backbone.LocalStorage = window.Store = (name) ->
+##    @name = name
+##    store = @localStorage().getItem(@name)
+##    @records = (store and store.split(",")) or []
 #
-#  _.extend Backbone.LocalStorage::,
+##    Backbone.Ontology = window.Ontology = (hostname, nickname)/
 #
-#    # Save the current state of the **Store** to *localStorage*.
+#  _.extend Backbone.Ontology::,
+#
+#    # Save the current state of the model to ontology -- localstorage...? ... **Store** to *localStorage*.
 #           save: ->
-#             @localStorage().setItem @name, @records.join(",")
+##             @localStorage().setItem @name, @records.join(",")
+#             @ontology.save()
 #
 #
 #           # Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
 #           # have an id of it's own.
 #           create: (model) ->
-#             unless model.id
-#               model.id = guid()
-#               model.set model.idAttribute, model.id
-#             @localStorage().setItem @name + "-" + model.id, JSON.stringify(model)
-#             @records.push model.id.toString()
-#             @save()
-#             @find model
+##             unless model.id
+##               model.id = guid()
+##               model.set model.idAttribute, model.id
+##             @localStorage().setItem @name + "-" + model.id, JSON.stringify(model)
+##             @records.push model.id.toString()
+##             @save()
+##             @find model
 #
 #
 #           # Update a model by replacing its copy in `this.data`.

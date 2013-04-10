@@ -1,32 +1,41 @@
-h1 Okay.....!
-p Demonstrate we're talking to Zeronaut...
-
 canvas#zeronaut
 
-form
-  /! <label>Nick</label>
-  /! <input type='text' autofocus='true' id='nick' name='nick' value='anon' size='20' /><br />
-  label Message
-  /= succeed "&nbsp;" do
-  input#message autofocus="true" name="message" size="80" type="text" value=""
-  input#submit type="submit"
+/ todo...?
+/form
+/  label Chat
+/  input#chat_message name="chat_message" size="120" type="text" placeholder="glhf"
+//
+/form
+/  label New World Name
+/  input#world_name autofocus="true" name="world_name" size="80" type="text" placeholder="somewhere else"
+/  input#submit_world_create type="submit"
 
-#msg
+/  /! <label>Nick</label>
+/  /! <input type='text' autofocus='true' id='nick' name='nick' value='anon' size='20' /><br />
+/  label Message
+/  /= succeed "&nbsp;" do
+/  input#message autofocus="true" name="message" size="80" type="text" value=""
+/  input#submit type="submit"
+/
+/#msg
+/  p (Chat messages go here...)
 
 = javascript_include_tag :rpg_zero
 
-
 javascript:
-  window.nickname = "#{current_user.name}"
+  window.player_name   = "#{current_user.name}";
+  window.player_id     = #{current_user.id};
   window.ontology_host = "#{Zephyr::Application.config.ontology_host}"
 
-coffee:
-
+/coffee:
   $(document).ready ->
+    #ontology.on 'chat', (data) ->
+    #  $("#msg").append "<p>" + data['player'] + ":" + data['message'] + "</p>"
 
-    ontology.on 'chat', (data) ->
-      $("#msg").append "<p>" + data['player'] + ":" + data['message'] + "</p>"
+    #$("#chat_message_submit").click ->
+    #  ontology.chat($("#message").val())
+    #  false
 
-    $("#submit").click ->
-      ontology.chat $("#message").val()
+    $("#submit_world_create").click ->
+      ontology.create($("#world_name").val())
       false

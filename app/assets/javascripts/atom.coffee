@@ -142,6 +142,7 @@ class Game
   update: (dt) ->
   draw: ->
   run: ->
+    console.log "--- atom.Game running!"
     return if @running
     @running = true
 

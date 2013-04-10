@@ -1,3 +1,15 @@
+# TODO rewrite using ontology/firehose :)
+#
+# cool things we could do:
+#     - the basic unified 'movement' behavior i was initially wondering about with this
+#       (rotating stars, or being pulled into a 'vortex', or even 'warped' by the movement
+#        of the mouse, etc.)
+#
+# interesting reasons to do it:
+#     - we could start building some of the client-side physics simulation that
+#       we would need for more 'twitchy' games to feel responsive; as well as the
+#       logic for 'smoothly' integrating updates
+#
 class Universe extends atom.Game
   constructor: ->
     super
