@@ -1,4 +1,5 @@
-## TODO rpg demo! (not a bad idea to consider how we might be able to leverage rot.js... somewhat obviated now but still might be interesting for inspriation)
+## TODO rpg demo! (not a bad idea to consider how we might be able to leverage rot.js...
+#                  somewhat obviated now but still might be interesting for inspriation...)
 class RPGZero extends atom.Game
   constructor: ->
     super
@@ -25,28 +26,28 @@ class RPGZero extends atom.Game
 
 
     # other global entities
-    window.Player       = Zephyr.Models.Player
-    window.PlayerView   = Zephyr.Views.PlayerView
-
-    window.Players      = new Zephyr.Collections.Players()
-    window.PlayersView  = new Zephyr.Views.PlayersView()
+#    window.Player       = Zephyr.Models.Player
+#    window.PlayerView   = Zephyr.Views.PlayerView
+#
+#    window.Players      = new Zephyr.Collections.Players()
+#    window.PlayersView  = new Zephyr.Views.PlayersView()
 
     window.WorldView    = Zephyr.Views.WorldView
     window.World        = Zephyr.Models.World
 
-    window.Worlds       = new Zephyr.Collections.Worlds()
-    window.WorldsView   = new Zephyr.Views.WorldsView(Worlds)
+#    window.Worlds       = new Zephyr.Collections.Worlds()
+    window.WorldsView   = new Zephyr.Views.WorldsView({collection:new Zephyr.Collections.Worlds()})
 
     # can hook into global behavior if need be...
-    Worlds.on 'add', (world) ->
-      console.log "=== ADDED WORLD #{world.get('id')}!!!"
+#    Worlds.on 'add', (world) ->
+#      console.log "=== ADDED WORLD #{world.get('id')}!!!"
 
     # bind all the things
     atom.input.bind atom.button.LEFT,     'click'
-    atom.input.bind atom.key.LEFT_ARROW,  'left'
-    atom.input.bind atom.key.RIGHT_ARROW, 'right'
-    atom.input.bind atom.key.UP_ARROW,    'up'
-    atom.input.bind atom.key.DOWN_ARROW,  'down'
+#    atom.input.bind atom.key.LEFT_ARROW,  'left'
+#    atom.input.bind atom.key.RIGHT_ARROW, 'right'
+#    atom.input.bind atom.key.UP_ARROW,    'up'
+#    atom.input.bind atom.key.DOWN_ARROW,  'down'
     console.log "--- done rpgzero init!!!"
 
   draw:   ->
@@ -60,38 +61,33 @@ class RPGZero extends atom.Game
       CurrentWorldView.render()
 
   update: (dt) ->
-    console.log "--- update"
-    console.log "current game state: #{window.GameState.get('name')}"
+#    console.log "--- update"
+#    console.log "current game state: #{window.GameState.get('name')}"
 
     if atom.input.released 'click'
-#      console.log "+++++ CLICK ++++++"
       if window.GameState is window.GameStates.WorldSelection
-#        console.log "---- checking worlds view for click....!!!!"
-        clicked_world = WorldsView.clicked(atom.input.mouse)
-#        world
-        console.log "--- clicked world? #{clicked_world}"
-        if world = clicked_world # world = WorldsView.clicked(atom.input.mouse)
-          console.log "!!!! got the world that was clicked"
-          console.log "--- it looks like the following world was clicked: "
-          console.log(world)
-          console.log "--- [would be] attempting to switch to world #{world.get('name')}"
+        clicked_label = WorldsView.clickedLabel(atom.input.mouse)
+        clicked_world = WorldsView.clickedWorld(atom.input.mouse)
+        if world = clicked_world
           ontology.join world.get('id')
-
-          # note, could actually start a firehose consumer here on the world players
-          # and wait until we show up
-          # for now just assume we'll get added eventually
-
-          # TODO set some global stuff about the current world?
           window.CurrentWorld     = world
-          window.CurrentWorldView = new WorldView(world)
-          window.GameState               = window.GameStates.Playing
-          console.log "--- playing in world!"
+          console.log "--- creating new world view with model: "
+          console.log world
+          window.CurrentWorldView = new WorldView({model:world})
+          window.GameState        = window.GameStates.Playing
+          console.log "--- playing in world #{world.get('name')}!"
+        else if label = clicked_label
+          if label == 'create'
+            ontology.create prompt('what shall the name of the new realm be?')
+            console.log "--- okay, sent world creation message..."
 
       else if window.GameState is window.GameStates.Playing
-        window.CurrentWorldView.clicked(atom.input.mouse)
-
-
-
+        clicked_label_name = window.CurrentWorldView.clicked(atom.input.mouse)
+        if label = clicked_label_name
+          if label == 'exit'
+            console.log "=== game exit!"
+            ontology.leave()
+            window.GameState = window.GameStates.WorldSelection
 
 #     WorldsView.
 

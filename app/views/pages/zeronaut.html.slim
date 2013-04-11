@@ -25,6 +25,7 @@ canvas#zeronaut
 javascript:
   window.player_name   = "#{current_user.name}";
   window.player_id     = #{current_user.id};
+  window.firehose_host = "#{Zephyr::Application.config.firehose_host}"
   window.ontology_host = "#{Zephyr::Application.config.ontology_host}"
 
 /coffee:

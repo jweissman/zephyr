@@ -1,15 +1,9 @@
 class Zephyr.Collections.Worlds extends Backbone.Collection
-
   model: Zephyr.Models.World
-
   initialize: =>
-    @stream = new Firehose.Consumer
-      message: (data) =>
-        console.log "=== worlds update from firehose!"
-        console.log data
-        @set(data)
-      uri: "//localhost:7474/worlds.json"
-    @stream.connect()
+    console.log "--- worlds about to subscribe to firehose..."
+    # eek, bb-relational :(
+    ObjectHelper.addRole(@, FirehoseConsumer)
+    @subscribe 'worlds'
 
-#  update: =>
-#    console.log "--- update worlds...?"
+    console.log "=== worlds collection created, subscribed to firehose"

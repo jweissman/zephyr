@@ -4,25 +4,27 @@ class Zephyr.Models.Player extends Backbone.RelationalModel
     {
       type: Backbone.HasMany,
       key: 'world',
-      relatedModel: 'World',
-      collectionType: 'Worlds',
+      relatedModel: 'Zephyr.Models.World',
+#      collectionType: 'Worlds',
       reverseRelation: {
         key: 'players',
         includeInJSON: 'id'
       }
     }
   ]
+  initialize: =>
+    ObjectHelper.addRole(@, FirehoseConsumer)
+    @subscribe 'player', @get('id')
 
-  initialize: (data) ->
-    console.log "--- created player with data: #{data}"
-    @set(data)
-    @stream = new Firehose.Consumer
-      message: (data) =>
-        console.log "--- player #{@get('id')} got data!"
-        console.log data
-        @set(data)
-      uri: "//localhost:7474/player/#{@get('id')}.json"
-    @stream.connect()
+#    console.log "=================== creating player!!!"
+#    @set(data)
+#    @stream = new Firehose.Consumer
+#      message: (data) =>
+#        console.log "--- player #{@get('id')} got data!************"
+#        console.log data
+#        @set(data)
+#      uri: "//localhost:7474/player/#{@get('id')}.json"
+#    @stream.connect()
 #    @subscribe()
 
 # get updates from the server

@@ -16,6 +16,9 @@
 //= require underscore
 //= require backbone
 //= require support/backbone-relational
+//= require support/object_helper
+//= require support/mixin
+//= require support/backbone-firehose
 //= require extensions/backbone.collection.idempotent
 //= require backbone_sync-rails/rails_faye_subscriber
 //= require firehose

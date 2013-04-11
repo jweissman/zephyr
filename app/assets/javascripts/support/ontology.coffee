@@ -72,8 +72,6 @@ class root.Ontology
       @ws.send msg # stringified_command
     catch error
       console.log "Error sending websocket message: #{error}"
-    #    finally
-
 
     true
 
@@ -81,7 +79,5 @@ $(document).ready ->
   console.log "=== ontology client establishing connection..."
   if ontology_host?
     console.log "--- establishing connection to ontology host / not joining!"
-    window.ontology = new Ontology(ontology_host,9000,player_id,player_name) #,nickname)
-#    console.log "--- attempting to join world..."
-#    ontology.join()
+    window.ontology = new Ontology(ontology_host,9000,player_id,player_name)
 

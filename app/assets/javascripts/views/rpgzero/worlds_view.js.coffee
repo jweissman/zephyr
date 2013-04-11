@@ -1,28 +1,45 @@
+# Summary view of active worlds.
 class Zephyr.Views.WorldsView extends Backbone.View
-  initialize: (@collection) =>
-    @worldViews = {}
-    @collection.on 'add', (w) =>
-      console.log "--- adding world view for world: "
-      console.log w
-      @worldViews[w.get('id')] = new Zephyr.Views.WorldSummaryView(w)
+  initialize: =>
+#    console.log "=== worlds view created!"
 
-  render: ->
-    _.each @worldViews, (view) ->
-      view.render()
+    @labels = {
+      'create': new Canvas.Text(240,250,{msg: "Create New Realm"})
+    }
 
-  clicked: (mouse) =>
-    console.log "======== CLICKED!?!?"
+#    @worldViews = {}
+#    @collection.on 'reset', (collection) =>
+#      console.log "=== WORLDS COLLECTION RESET"
+#      @collection = collection
 
-    clicked_world = null
-    _.each @worldViews, (view) =>
-      console.log "--- checking view for click..."
-      clicked = view.clicked(mouse)
-      console.log "--- clicked? #{clicked}"
-      if view.clicked(mouse)
-        clicked_world = view.model
+#      @collection.each (w) =>
+#        @worldViews[w.get('id')] = new Zephyr.Views.WorldSummaryView({model:w,collection:collection})
 
-    console.log "--- clicked world: #{clicked_world}"
-    return clicked_world
+  render: =>
+#    console.log "--- render worlds: "
+#    console.log "--- i have collection: "
+#    console.log @collection
 
+    @collection.each (world) =>
+#      console.log world
+      (new Zephyr.Views.WorldSummaryView({model:world,collection:@collection})).render() # @worldViews, (view)  =>
+      #view.render()
+    _.each @labels,     (label) => label.draw()
 
+  clickedLabel: (mouse) =>
+    clicked_label = null
+    _.map @labels, (label,label_name) =>
+      if label.hit(mouse)
+        clicked_label = label_name
+    return clicked_label
 
+#      console.log "--- ....*****"
+
+  clickedWorld: (mouse) =>
+    false
+
+#    clicked_world = null
+#    _.each @worldViews, (view) =>
+#      if view.clicked(mouse)
+#        clicked_world = view.model
+#    return clicked_world

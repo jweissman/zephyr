@@ -3,20 +3,26 @@
   # model: World # (needed in this case?)
 
 class Zephyr.Views.WorldSummaryView extends Backbone.View
-  initialize: (@model) ->
-    console.log "--- created world summary view"
+  initialize: =>
+#    console.log "--- created world summary view!"
+    # could bind to model change and update that way...?
 
   text: =>
-#    console.log "--- render micro text"
     name  = @model.get 'name'
-    count = @model.get('players').length
+    count = 0
+    count = @model.get('players').length if @model.get 'players'
     tick  = @model.get 'tick'
-    return new Canvas.Text(300, 320+(20*Worlds.indexOf(@model)), {
-      msg: "World #{name} (#{count} active players; #{tick})"
-    })
+    index = @collection.indexOf(@model)
+
+    x = 400
+    y = 320 + (20*index)
+
+    message = "World '#{name}' with #{count} active players at tick #{tick}"
+
+#    console.log "--- rendering world summary for #{name} at (#{x}, #{y})"
+    return new Canvas.Text(x,y, {msg: message})
 
   render: =>
-#    console.log "--- render micro text"
     @text().draw()
 
   clicked: (mouse) =>

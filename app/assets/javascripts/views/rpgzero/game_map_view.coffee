@@ -1,10 +1,7 @@
 # got the idea to have a canvas view distinct from everything else, but it's really just a series of helpers for the
 # world view...
-class Zephyr.Views.CanvasView extends Backbone.View
-  initialize: (@world) =>
-    console.log "=== initializing canvas view...!!!"
-    #    @world = opts['world']
-
+class Zephyr.Views.GameMapView extends Backbone.View
+  initialize: =>
     ####################################################################################################################
     ## REMEMBER TO ADD THE NEW SPRITE TO MANIFEST AT THE BOTTOM OF THE PAGE
     ## OR YOU WILL NOT BE DISPLAYING YOUR NEW SPRITE TODAY!
@@ -29,38 +26,47 @@ class Zephyr.Views.CanvasView extends Backbone.View
 
   clicked: (mouse) =>
     console.log "--- canvas view clicked!!!"
+    clicked_label = null
     _.map @labels, (label,label_name) =>
       console.log "--- considering whether label #{label_name} was hit at #{mouse.x}, #{mouse.y}"
       if label.hit(mouse)
-#        console.log "--- label clicked: "
-#        console.log label
-        if label_name == 'exit'
-          console.log "--- user clicked leave! guess we're doing it..."
-          ontology.leave()
-          window.GameState = window.GameStates.WorldSelection
+        clicked_label = label_name
+#        if label_name == 'exit'
+#          console.log "--- user clicked leave! guess we're doing it..."
+#
+#          ontology.leave()
+#          window.GameState = window.GameStates.WorldSelection
+    return clicked_label
 
   render: ->
     console.log '--- rendering canvas!'
 
-    map = @world.get('map')
-    console.log "=== GOT MAP: "
-    console.log map
+    map = @model.get('map')
+#    console.log "=== GOT MAP: "
+#    console.log map
 
-    ts = @world.get('tile_size') or 32
-    console.log "--- tile size: #{ts}"
-
+    ts = @model.get('tile_size') or 32
+#    console.log "--- tile size: #{ts}"
+#
     @tilemap(map,{tile_size:ts}) if map
 
-    console.log "--- handling labels..."
+#    console.log "--- handling labels..."
     _.each @labels, (label) =>
-      console.log "--- attempting to draw label..."
+#      console.log "--- attempting to draw label..."
       label.draw()
 
-    players = @world.get('players')
-    for player in players
-      x  = player.get('x')
-      y  = player.get('y')
-      @sprites['warrior'].draw x*ts, y*ts
+    players = @model.get('players')
+    console.log "--- i have the following players: "
+#    console.log players
+    if player.length == 0
+      console.log '--- i should really have players! maybe the update is not here yet'
+    else
+      for player in players
+        console.log "--- i have the following for a player: "
+        console.log player
+#      x  = player.get('x')
+#      y  = player.get('y')
+#      @sprites['warrior'].draw x*ts, y*ts
 
   dereferenceSprite: (code) ->
     switch code
@@ -85,7 +91,7 @@ class Zephyr.Views.CanvasView extends Backbone.View
 
 # go ahead and handle assets here...?
 $(document).ready ->
-  console.log "--- canvas view queuing assets...."
+#  console.log "--- canvas view queuing assets...."
   Assets.queueDownload('floor.png')
   Assets.queueDownload('steel.png')
   Assets.queueDownload('warrior.png')

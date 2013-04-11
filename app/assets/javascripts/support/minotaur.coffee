@@ -1,2 +1,0 @@
-class Minotaur
-#  @decodeMap: (mapData) ->
