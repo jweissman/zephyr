@@ -1,20 +1,24 @@
-class Zephyr.Models.Player extends Backbone.RelationalModel
+class Zephyr.Models.Player extends Backbone.Model # RelationalModel
 #  model_name: -> 'players'
-  relations: [
-    {
-      type: Backbone.HasMany,
-      key: 'world',
-      relatedModel: 'Zephyr.Models.World',
-#      collectionType: 'Worlds',
-      reverseRelation: {
-        key: 'players',
-        includeInJSON: 'id'
-      }
-    }
-  ]
+#  relations: [
+#    {
+#      type: Backbone.HasMany,
+#      key: 'world',
+#      relatedModel: 'Zephyr.Models.World',
+##      collectionType: 'Worlds',
+#      reverseRelation: {
+#        key: 'players',
+#        includeInJSON: 'id'
+#      }
+#    }
+#  ]
+
   initialize: =>
+    console.log "===== NEW PLAYER CREATED!!!! subscribing"
     ObjectHelper.addRole(@, FirehoseConsumer)
     @subscribe 'player', @get('id')
+
+#Zephyr.Models.Player.setup()
 
 #    console.log "=================== creating player!!!"
 #    @set(data)

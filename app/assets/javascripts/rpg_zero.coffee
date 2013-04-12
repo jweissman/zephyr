@@ -26,17 +26,19 @@ class RPGZero extends atom.Game
 
 
     # other global entities
-#    window.Player       = Zephyr.Models.Player
-#    window.PlayerView   = Zephyr.Views.PlayerView
-#
+    window.Player       = Zephyr.Models.Player
+    window.PlayerView   = Zephyr.Views.PlayerView
+
 #    window.Players      = new Zephyr.Collections.Players()
-#    window.PlayersView  = new Zephyr.Views.PlayersView()
+#    window.PlayersView  = new Zephyr.Views.PlayersView({collection: new Zephyr.Collections.Players()})
 
     window.WorldView    = Zephyr.Views.WorldView
     window.World        = Zephyr.Models.World
 
+    window.Worlds       = new Zephyr.Collections.Worlds()
+
 #    window.Worlds       = new Zephyr.Collections.Worlds()
-    window.WorldsView   = new Zephyr.Views.WorldsView({collection:new Zephyr.Collections.Worlds()})
+    window.WorldsView   = new Zephyr.Views.WorldsView({collection: Worlds})
 
     # can hook into global behavior if need be...
 #    Worlds.on 'add', (world) ->
@@ -57,7 +59,7 @@ class RPGZero extends atom.Game
       # render worlds selection
       WorldsView.render()
     else if GameState is GameStates.Playing
-      console.log "=== attempting to render current world view!!!!"
+#      console.log "=== attempting to render current world view!!!!"
       CurrentWorldView.render()
 
   update: (dt) ->
@@ -69,23 +71,18 @@ class RPGZero extends atom.Game
         clicked_label = WorldsView.clickedLabel(atom.input.mouse)
         clicked_world = WorldsView.clickedWorld(atom.input.mouse)
         if world = clicked_world
+          console.log "--- joining world #{world.get('name')}!"
           ontology.join world.get('id')
           window.CurrentWorld     = world
-          console.log "--- creating new world view with model: "
-          console.log world
           window.CurrentWorldView = new WorldView({model:world})
           window.GameState        = window.GameStates.Playing
-          console.log "--- playing in world #{world.get('name')}!"
         else if label = clicked_label
           if label == 'create'
             ontology.create prompt('what shall the name of the new realm be?')
-            console.log "--- okay, sent world creation message..."
-
       else if window.GameState is window.GameStates.Playing
         clicked_label_name = window.CurrentWorldView.clicked(atom.input.mouse)
         if label = clicked_label_name
           if label == 'exit'
-            console.log "=== game exit!"
             ontology.leave()
             window.GameState = window.GameStates.WorldSelection
 

@@ -2,12 +2,13 @@
 # world view...
 class Zephyr.Views.GameMapView extends Backbone.View
   initialize: =>
+
+
     ####################################################################################################################
     ## REMEMBER TO ADD THE NEW SPRITE TO MANIFEST AT THE BOTTOM OF THE PAGE
     ## OR YOU WILL NOT BE DISPLAYING YOUR NEW SPRITE TODAY!
     ## ALSO MAKE SURE YOU HAVE ACTUALLY HAVE PUT AN UNDERLYING IMAGE INTO public/assets (!)
     ####################################################################################################################
-
 
     @sprites = {
       'steel':   new Canvas.Image(Assets.getAsset('steel.png'))
@@ -24,11 +25,13 @@ class Zephyr.Views.GameMapView extends Backbone.View
       'exit': new Canvas.Text(640,300,{msg: "Leave Realm Now!"})
     }
 
+
+
   clicked: (mouse) =>
-    console.log "--- canvas view clicked!!!"
+#    console.log "--- canvas view clicked!!!"
     clicked_label = null
     _.map @labels, (label,label_name) =>
-      console.log "--- considering whether label #{label_name} was hit at #{mouse.x}, #{mouse.y}"
+#      console.log "--- considering whether label #{label_name} was hit at #{mouse.x}, #{mouse.y}"
       if label.hit(mouse)
         clicked_label = label_name
 #        if label_name == 'exit'
@@ -39,31 +42,32 @@ class Zephyr.Views.GameMapView extends Backbone.View
     return clicked_label
 
   render: ->
-    console.log '--- rendering canvas!'
+#    @map = GameMap.findOrCreate()
 
-    map = @model.get('map')
+#    console.log '--- rendering canvas!'
+
+#    map = @model.get('game_map')
 #    console.log "=== GOT MAP: "
 #    console.log map
-
-    ts = @model.get('tile_size') or 32
-#    console.log "--- tile size: #{ts}"
 #
-    @tilemap(map,{tile_size:ts}) if map
+#    ts = @model.get('tile_size') or 32
+##    console.log "--- tile size: #{ts}"
+##
+#    @tilemap(map,{tile_size:ts}) if map
 
 #    console.log "--- handling labels..."
-    _.each @labels, (label) =>
-#      console.log "--- attempting to draw label..."
-      label.draw()
+    _.each @labels, (label) => label.draw()
 
-    players = @model.get('players')
-    console.log "--- i have the following players: "
-#    console.log players
-    if player.length == 0
-      console.log '--- i should really have players! maybe the update is not here yet'
-    else
-      for player in players
-        console.log "--- i have the following for a player: "
-        console.log player
+
+#    players = @model.get('players')
+#    if !players || players.length == 0
+#      console.log '--- the world should really have players! maybe the update is not here yet...?'
+#    else
+#      console.log "--- i have the following players: "
+#      console.log players
+#      for player in players
+#        console.log "--- i have the following for a player: "
+#        console.log player
 #      x  = player.get('x')
 #      y  = player.get('y')
 #      @sprites['warrior'].draw x*ts, y*ts

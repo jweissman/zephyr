@@ -6,4 +6,4 @@ class Zephyr.Collections.Worlds extends Backbone.Collection
     ObjectHelper.addRole(@, FirehoseConsumer)
     @subscribe 'worlds'
 
-    console.log "=== worlds collection created, subscribed to firehose"
+    console.log "=== worlds collection created, subscribed to firehose...!!!!"

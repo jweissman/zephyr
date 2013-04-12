@@ -6,8 +6,9 @@ class Zephyr.Views.WorldView extends Backbone.View
 #    @model.on("change", ->
 #      console.log "--- world was changed! [maybe a player was added? or just a tick probably...]"
 #    )
-    @canvas_view        = new Zephyr.Views.GameMapView({model:@model})
-    @world_summary_view = new Zephyr.Views.WorldSummaryView({model:@model})
+
+    @game_map_view        = new Zephyr.Views.GameMapView({model:@model.game_map})
+    @world_summary_view   = new Zephyr.Views.WorldSummaryView({model:@model})
 
     # could update stats somewhat intelligently -- but it's all coming at once now anyway so nvm
 #    @model.on 'change', (w) =>
@@ -15,12 +16,12 @@ class Zephyr.Views.WorldView extends Backbone.View
 #      @worldViews[w.get('id')] = new Zephyr.Views.WorldSummaryView({model:w})
 
 
-  clicked: (m) => @canvas_view.clicked(m)
+  clicked: (m) => @game_map_view.clicked(m)
 
   render: =>
 #    console.log "--- world render...!!!"
 #    console.log "--- i really need players and a map! :)"
-    @canvas_view.render()
+    @game_map_view.render()
     @world_summary_view.render()
 
     # the model should have a map again...! :)

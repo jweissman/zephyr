@@ -1,20 +1,22 @@
-class Zephyr.Models.World extends Backbone.Model
+class Zephyr.Models.World extends Backbone.Model # RelationalModel
   # a surprisingly verbose way to say "has n :players, has 1 :map"
+  # unbelievably frustrated with backbone-relational .and firehose... fuck!
 #  relations: [
 #    {
 #      type: Backbone.HasMany
 #      key: 'players'
 #      relatedModel: "Zephyr.Models.Player"
+#      includeInJSON: Backbone.Model::idAttribute
 #      collectionType: "Zephyr.Collections.Players"
-##      reverseRelation: {
-##        key: 'world'
-##        includeInJSON: 'id'
-##      }
+#      reverseRelation:
+#        key: 'playingIn'
+#        includeInJSON: 'id'
 #    }
 #    {
 #      type: Backbone.HasOne
-#      key: 'map'
+#      key: 'game_map_id'
 #      relatedModel: 'Zephyr.Models.GameMap'
+#      includeInJSON: Backbone.Model::idAttribute
 ##      reverseRelation: {
 ##        key: 'world'
 ##        includeInJSON: 'id'
@@ -23,49 +25,35 @@ class Zephyr.Models.World extends Backbone.Model
 #  ]
 
   initialize: =>
+#    @players = []
     console.log "=== newly created world #{@get('id')}"
-#    console.log "--- about to subscribe to firehose..."
+    console.log "--- about to subscribe to firehose..."
     ObjectHelper.addRole(@, FirehoseConsumer)
     @subscribe 'world', @get('id')
-    console.log "--- world #{@get('id')} is subscribed to firehose...!"
+#    console.log "--- world #{@get('id')} is subscribed to firehose...!"
 #    @bind "remove", =>
 #      console.log "--- unsubscribed...!"
 #      @unsubscribe()
+    console.log "--- okay, created a world!"
+    console.log "=== now to get maps and players! :)"
+    console.log "--- how best to do this?"
+    console.log @
+
+
+    # maybe only do this when the world is entered by the client?
+#    @players  = new Zephyr.Collections.Players({world: @})
+    console.log "=== about to load game map with id #{@get('game_map_id')}"
+    @game_map = new Zephyr.Models.GameMap({id: @get('game_map_id')})
+
+#   we want to get the model's map data and player ids
+#    @map_data = GameMaps.get({id: @model.get('game_map_id')})
+
+#    players = []
+#    _.each @model.get("player_ids"), (player_id) =>
+#      players.push Players.get({id: player_id})
+
+    # well, we need to subscribe...
+#    @players = new Zephyr.Collections.Players({collection: players, subscribe: false})
 
 # firehose-powered backbone models :)
-
-
-#  update: =>
-    # any local processing on each frame might be handled here...
-    # (animation, etc.? no; offhand that seems like view stuff. any data-level stuff goes here.)
-
-#
-#    console.log "=== initialize world...!**********************"
-#
-#    # TODO create additional entities when 'activated'??
-#
-#    console.log "--- subscribe worldstream..."
-#    @stream = new Firehose.Consumer
-#      message: (data) =>
-#        console.log "--- updating world: #{data}"
-#        @set(data)
-#      uri: "//localhost:7474/worlds/#{@get('id')}.json"
-#    console.log "--- built stream, about to connect (!!!!!)"
-#    @stream.connect()
-
-#    @on "change:players", (model) ->
-#      console.log "--- changed players!!!!****************"
-
-#  update: ->
-#    console.log "--- world model updating..."
-#    console.log "--- i should now get updates when the world changes...!"
-#
-#
-#
-#
-#  update: ->
-#    console.log "--- attempting to update world... (not sure what this would do, so no-op for now)"
-
-
-
-
+#Zephyr.Models.World.setup()

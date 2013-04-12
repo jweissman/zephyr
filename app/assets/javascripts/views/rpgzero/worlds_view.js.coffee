@@ -15,6 +15,9 @@ class Zephyr.Views.WorldsView extends Backbone.View
 #      @collection.each (w) =>
 #        @worldViews[w.get('id')] = new Zephyr.Views.WorldSummaryView({model:w,collection:collection})
 
+  summaryFor: (w) =>
+    (new Zephyr.Views.WorldSummaryView({model:w,collection:@collection}))
+
   render: =>
 #    console.log "--- render worlds: "
 #    console.log "--- i have collection: "
@@ -22,7 +25,7 @@ class Zephyr.Views.WorldsView extends Backbone.View
 
     @collection.each (world) =>
 #      console.log world
-      (new Zephyr.Views.WorldSummaryView({model:world,collection:@collection})).render() # @worldViews, (view)  =>
+      @summaryFor(world).render() # @worldViews, (view)  =>
       #view.render()
     _.each @labels,     (label) => label.draw()
 
@@ -36,10 +39,10 @@ class Zephyr.Views.WorldsView extends Backbone.View
 #      console.log "--- ....*****"
 
   clickedWorld: (mouse) =>
-    false
+#    false
 
-#    clicked_world = null
-#    _.each @worldViews, (view) =>
-#      if view.clicked(mouse)
-#        clicked_world = view.model
-#    return clicked_world
+    clicked_world = null
+    @collection.each (world) =>
+      if @summaryFor(world).clicked(mouse)
+        clicked_world = world
+    return clicked_world
