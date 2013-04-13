@@ -73,8 +73,10 @@ class RPGZero extends atom.Game
         if world = clicked_world
           console.log "--- joining world #{world.get('name')}!"
           ontology.join world.get('id')
+          # connect and get players/map
+          world.activate()
           window.CurrentWorld     = world
-          window.CurrentWorldView = new WorldView({model:world})
+          window.CurrentWorldView = new WorldView({model:world},{players: world.players})
           window.GameState        = window.GameStates.Playing
         else if label = clicked_label
           if label == 'create'

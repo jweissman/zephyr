@@ -1,5 +1,5 @@
 class Zephyr.Views.WorldView extends Backbone.View
-  initialize: =>
+  initialize: (options) =>
 #    console.log "--- new world view!!!!"
 #    console.log "--- i have model: "
 #    console.log @model
@@ -7,6 +7,9 @@ class Zephyr.Views.WorldView extends Backbone.View
 #      console.log "--- world was changed! [maybe a player was added? or just a tick probably...]"
 #    )
 
+#    @players_view         = new Zephyr.Views.PlayersView({collection:@model.players})
+
+    # players should already be passed into game map...?
     @game_map_view        = new Zephyr.Views.GameMapView({model:@model.game_map})
     @world_summary_view   = new Zephyr.Views.WorldSummaryView({model:@model})
 
@@ -22,6 +25,7 @@ class Zephyr.Views.WorldView extends Backbone.View
 #    console.log "--- world render...!!!"
 #    console.log "--- i really need players and a map! :)"
     @game_map_view.render()
+#    @players_view.render()
     @world_summary_view.render()
 
     # the model should have a map again...! :)

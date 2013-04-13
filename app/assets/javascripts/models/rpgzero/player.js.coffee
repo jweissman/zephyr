@@ -14,7 +14,7 @@ class Zephyr.Models.Player extends Backbone.Model # RelationalModel
 #  ]
 
   initialize: =>
-    console.log "===== NEW PLAYER CREATED!!!! subscribing"
+    console.log "===== NEW PLAYER CREATED!!!! subscribing..."
     ObjectHelper.addRole(@, FirehoseConsumer)
     @subscribe 'player', @get('id')
 

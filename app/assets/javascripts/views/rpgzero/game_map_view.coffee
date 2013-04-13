@@ -1,7 +1,14 @@
 # got the idea to have a canvas view distinct from everything else, but it's really just a series of helpers for the
 # world view...
 class Zephyr.Views.GameMapView extends Backbone.View
-  initialize: =>
+  initialize: (options) =>
+
+    console.log "==== game map view, model: "
+    console.log @model
+
+    console.log "--- players (in game_map_view#new)"
+
+    console.log @model.get('players')
 
 
     ####################################################################################################################
@@ -27,6 +34,7 @@ class Zephyr.Views.GameMapView extends Backbone.View
 
 
 
+
   clicked: (mouse) =>
 #    console.log "--- canvas view clicked!!!"
     clicked_label = null
@@ -45,32 +53,38 @@ class Zephyr.Views.GameMapView extends Backbone.View
 #    @map = GameMap.findOrCreate()
 
 #    console.log '--- rendering canvas!'
+#    console.log @
 
-#    map = @model.get('game_map')
+    map = @model.get('rows')
 #    console.log "=== GOT MAP: "
 #    console.log map
 #
-#    ts = @model.get('tile_size') or 32
+    ts = 32
 ##    console.log "--- tile size: #{ts}"
 ##
-#    @tilemap(map,{tile_size:ts}) if map
+    @tilemap(map,{tile_size:ts}) if map
 
 #    console.log "--- handling labels..."
     _.each @labels, (label) => label.draw()
 
+#    console.log "--- i have players: "
+#    console.log @model.get('players')
 
-#    players = @model.get('players')
-#    if !players || players.length == 0
-#      console.log '--- the world should really have players! maybe the update is not here yet...?'
-#    else
+    players = @model.get('players')
+    if !players || players.length == 0
+      console.log '--- the world should really have players! maybe the update is not here yet...?'
+    else
+      console.log "--- i've got players baby! here they are:"
+      console.log players
 #      console.log "--- i have the following players: "
 #      console.log players
 #      for player in players
-#        console.log "--- i have the following for a player: "
-#        console.log player
-#      x  = player.get('x')
-#      y  = player.get('y')
-#      @sprites['warrior'].draw x*ts, y*ts
+      players.each (player) =>
+        console.log "--- i have the following for a player: "
+        console.log player
+        x  = player.get('x')
+        y  = player.get('y')
+        @sprites['warrior'].draw x*ts, y*ts
 
   dereferenceSprite: (code) ->
     switch code

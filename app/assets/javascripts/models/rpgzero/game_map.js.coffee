@@ -1,7 +1,14 @@
 class Zephyr.Models.GameMap extends Backbone.RelationalModel
-  initialize: =>
+  initialize: (@attributes, options) =>
+
     console.log "=== initialize game map with id #{@get('id')}!"
-#    console.log @
+    console.log "--- players (in game_map#new): "
+#    @players = options.players
+    console.log @get('players')
+    #    console.log @
+#   console.log "--- about to create players for world: #{@get('id')}"
+
+
 
     console.log "--- subscribing to game map via firehose!"
     ObjectHelper.addRole(@, FirehoseConsumer)
