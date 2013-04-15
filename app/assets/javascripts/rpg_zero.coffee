@@ -28,8 +28,7 @@ class RPGZero extends atom.Game
     # other global entities
     window.Player       = Zephyr.Models.Player
     window.PlayerView   = Zephyr.Views.PlayerView
-
-#    window.Players      = new Zephyr.Collections.Players()
+    window.Players      = new Zephyr.Collections.Players()
 #    window.PlayersView  = new Zephyr.Views.PlayersView({collection: new Zephyr.Collections.Players()})
 
     window.WorldView    = Zephyr.Views.WorldView
@@ -46,10 +45,10 @@ class RPGZero extends atom.Game
 
     # bind all the things
     atom.input.bind atom.button.LEFT,     'click'
-#    atom.input.bind atom.key.LEFT_ARROW,  'left'
-#    atom.input.bind atom.key.RIGHT_ARROW, 'right'
-#    atom.input.bind atom.key.UP_ARROW,    'up'
-#    atom.input.bind atom.key.DOWN_ARROW,  'down'
+    atom.input.bind atom.key.LEFT_ARROW,  'left'
+    atom.input.bind atom.key.RIGHT_ARROW, 'right'
+    atom.input.bind atom.key.UP_ARROW,    'up'
+    atom.input.bind atom.key.DOWN_ARROW,  'down'
     console.log "--- done rpgzero init!!!"
 
   draw:   ->
@@ -85,24 +84,33 @@ class RPGZero extends atom.Game
         clicked_label_name = window.CurrentWorldView.clicked(atom.input.mouse)
         if label = clicked_label_name
           if label == 'exit'
+            window.CurrentWorld.deactivate()
             ontology.leave()
+
+#            window.CurrentWorld = null
             window.GameState = window.GameStates.WorldSelection
 
 #     WorldsView.
 
-#    if atom.input.down 'left'
-#      ontology.move('west')
-#    else if atom.input.down 'right'
-#      ontology.move('east')
-#    else if atom.input.down 'up'
-#      ontology.move 'north'
-#    else if atom.input.down 'down'
-#      ontology.move 'south'
+    if GameState is GameStates.Playing
+      if atom.input.down 'left'
+        ontology.move('west')
+      else if atom.input.down 'right'
+        ontology.move('east')
+      if atom.input.down 'up'
+        ontology.move 'north'
+      else if atom.input.down 'down'
+        ontology.move 'south'
 #    else if atom.input.released 'click'
 #      console.log 'tap!'
 
 $(document).ready ->
+  console.log "=== preloading images and sounds"
   window.Assets.downloadAll(->
-    rpg_zero = new RPGZero()
-    rpg_zero.run()
+    console.log "--- images loaded"
+    atom.preloadSounds({sword: 'sword.wav', miss: 'miss.wav'},  ->
+      console.log "--- sounds loaded"
+      rpg_zero = new RPGZero()
+      rpg_zero.run()
+    )
   )

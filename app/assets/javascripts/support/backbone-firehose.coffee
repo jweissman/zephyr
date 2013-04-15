@@ -11,11 +11,7 @@ class root.FirehoseConsumer extends Mixin
     @firehose_uri += ".json"
     console.log "--- subscribing to updates from #{@firehose_uri}"
     @stream = new Firehose.Consumer
-      connected: => console.log "--- firehose consumer connected!"
-      disconnected: => console.log "--- firehose consumer disconnected!"
       message: (m) =>
-#        console.log "--- firehose consumer processing update: "
-#        console.log m
         if instance_id
           @set(m)
         else
@@ -33,7 +29,8 @@ class root.FirehoseConsumer extends Mixin
 #    console.log "--- connecting firehose..."
     @stream.connect()
 
-  # TODO actually use this when leaving worlds, etc. (e.g., call a #deactiate which corresponds with #activate.)
+  # TODO actually use this when leaving worlds, etc.
+  # (e.g., call a #deactivate to correspond with #activate.)
   unsubscribe: =>
     console.log "--- unsubscribe firehose...!!"
     @stream.stop()

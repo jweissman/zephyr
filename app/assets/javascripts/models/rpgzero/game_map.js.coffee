@@ -1,5 +1,5 @@
-class Zephyr.Models.GameMap extends Backbone.RelationalModel
-  initialize: (@attributes, options) =>
+class Zephyr.Models.GameMap extends Backbone.Model
+  initialize: => #(@attributes, options) =>
 
     console.log "=== initialize game map with id #{@get('id')}!"
     console.log "--- players (in game_map#new): "

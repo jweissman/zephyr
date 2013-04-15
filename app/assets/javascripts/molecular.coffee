@@ -144,17 +144,28 @@ class Canvas.Rectangle extends Canvas.Path
 # maybe a different class...
 class Canvas.Text extends Canvas.Rectangle
   analyze: ->
-    @size       = @opts['size'] or= 10
+    @size       = @opts['size'] or= 16
 #    @lineHeight = opts['lineHeight'] or= 1.2
     @font       = @opts['font'] or= @size+'px monospace' #'16px Arial'
     @msg        = @opts['msg']  or= 'hello world'
     @width      = atom.context.measureText(@msg).width
     @height     = @size #* @lineHeight
 
+    @fill_style = @opts['fill_style']  or= 'black'
+
+
+    @center   = @opts['center'] or= false
+    if @center
+      # adjust x,y to be center (really just adjust x, could address height if we need to)
+      @x = @x - @width/2
+      @y = @y - @height/2
+
+
   draw: ->
     @analyze()
     atom.context.font      = @font
-    atom.context.fillStyle = 'black'
+#    console.log "--- drawing text with fill style #{@fill_style}"
+    atom.context.fillStyle = @fill_style
     atom.context.fillText @msg, @x, @y
     #    console.log "=== wrote message at #{@x}, #{@y}!"
 

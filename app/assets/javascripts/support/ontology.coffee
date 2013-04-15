@@ -40,10 +40,6 @@ class root.Ontology
     console.log "--- MOVE #{direction}"
     @sendCommand("move", {direction: direction})
 
-#  bye:  ->
-#    console.log "--- BYE!"
-#    @sendCommand("bye")
-
   on: (evt,cb) ->
     console.log "--- callback registered: #{evt}"
     @callbacks[evt] = @callbacks[evt] or= []
@@ -61,6 +57,8 @@ class root.Ontology
       console.log msg
 
   sendCommand: (cmd, opts) =>
+    # should debounce maybe? definitely the responses maybe...
+    # (sending right away kind of makes sense)
     base_command_elements = {command: cmd, player_id: @player_id, player_name: @player_name}
     assembled_command = $.extend({},base_command_elements,opts)
     stringified_command = JSON.stringify(assembled_command)

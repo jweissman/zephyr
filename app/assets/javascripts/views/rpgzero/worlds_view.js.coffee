@@ -4,6 +4,7 @@ class Zephyr.Views.WorldsView extends Backbone.View
 #    console.log "=== worlds view created!"
 
     @labels = {
+      'title':  new Canvas.Text(100,150, {msg: 'Welcome, warrior, to the RPGZero Lobby!'})
       'create': new Canvas.Text(240,250,{msg: "Create New Realm"})
     }
 
@@ -22,12 +23,21 @@ class Zephyr.Views.WorldsView extends Backbone.View
 #    console.log "--- render worlds: "
 #    console.log "--- i have collection: "
 #    console.log @collection
+    player_count = 0
 
     @collection.each (world) =>
 #      console.log world
       @summaryFor(world).render() # @worldViews, (view)  =>
+      player_count = player_count + world.get('players').length
       #view.render()
     _.each @labels,     (label) => label.draw()
+#    console.log "--- worlds view render! i have these players:"
+#    console.log Players
+
+    # some notes about system state
+    message = "There are #{player_count} players in #{@collection.length} worlds."
+    message += " There are #{Players.length} players not yet in worlds."
+    new Canvas.Text(100,170, {msg: message}).draw()
 
   clickedLabel: (mouse) =>
     clicked_label = null

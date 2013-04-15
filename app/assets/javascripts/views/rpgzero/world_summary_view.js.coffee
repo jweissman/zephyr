@@ -5,12 +5,13 @@
 class Zephyr.Views.WorldSummaryView extends Backbone.View
   initialize: =>
   text: =>
-    players = @model.get('players')
-
-    count = 0
-    count = players.length if players
+#    players = @model.get('players')
+#
+#    count = 0
+#    count = players.length if players
 #    count = @model.get('players').length if @model.get 'players'
-
+    count = @model.get("players").length
+#    console.log "--- player count: #{count}"
     tick  = @model.get 'tick'
     name  = @model.get 'name'
 
@@ -19,8 +20,8 @@ class Zephyr.Views.WorldSummaryView extends Backbone.View
     else
       0
 
-    x = 400
-    y = 320 + (20*index)
+    x = 960
+    y = 420 + (20*index)
 
     message = "    '#{name}' [players currently active: #{count}] (tick #{tick})   "
     return new Canvas.Text(x,y, {msg: message})

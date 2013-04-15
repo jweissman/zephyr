@@ -1,9 +1,16 @@
+# i don't know how great or terrible this is, but i do think we need something like it for a unified model
+# system across the client/server divide.
+# i mean, ideally it's just a single zephyr 'model' which knows how to construct/generate
+# appropriate backbone models; which might be able to be done on the fly. idk. thoughts.
+
+#--- early thoughts
 # i'm no longer sure this makes sense
 # rpc duplex is good enough for communicating player input and pushing immediate 'de-structured' updates around
 # but the real thing is to push the updates regularly from the world smoothly and integrate changes to front-end models seamlessly....
 # (so the backbone-ontology adapter makes less sense in this context i think)
 
-# === earlier terrible thoughts
+
+# === earlier thoughts
 ##close to needing this now :) it's really the other side of the firehose stuff -- pushing updates from the clients...
 ##not sure what the 'best' way to handle this is, given that client updates may have to be 'rolled back'
 ##i guess it would 'repair' itself after the update, but there might be a few turns until the 'fix' replaces old positions

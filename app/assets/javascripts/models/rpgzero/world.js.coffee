@@ -23,10 +23,20 @@ class Zephyr.Models.World extends Backbone.Model
 
     console.log "=== world #{@get('name')} about to load game map with id #{@get('game_map_id')}"
 
-#    @players  = new Zephyr.Collections.Players([],{world_id:@get('id')})
+    @players  = new Zephyr.Collections.Players([],{world_id:@get('id')})
+    @enemies  = new Zephyr.Collections.Enemies([],{world_id:@get('id')})
+    @events   = new Zephyr.Collections.Events([],{world_id:@get('id')})
 #    console.log "--- players (in world#activate): "
 #    console.log @players
-    @game_map = new Zephyr.Models.GameMap({id: @get('game_map_id'), players: new Zephyr.Collections.Players([],{world_id:@get('id')})})
+    @game_map = new Zephyr.Models.GameMap({id: @get('game_map_id'), players: @players, enemies: @enemies, events: @events}) #new Zephyr.Collections.Players([],{world_id:@get('id')})})
+
+  deactivate: =>
+    console.log "--- deactivating subscription to world resources..."
+    @stream.stop()
+    @players.stream.stop() #unsubscribe()
+    @enemies.stream.stop()
+    @game_map.stream.stop() #unsubscribe()
+    console.log "--- done!"
 
 #    console.log "--- i know player ids... so we could just go ahead and create players here"
 
