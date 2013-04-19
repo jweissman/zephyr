@@ -51,6 +51,14 @@ class RPGZero extends atom.Game
     atom.input.bind atom.key.DOWN_ARROW,  'down'
     console.log "--- done rpgzero init!!!"
 
+    @tick = 0
+    @player_moving = false
+
+    # if much lower than this we get rough jitters (old moves backing up at server...) :(
+    @player_cooldown = 2
+    @last_player_move_tick = 0
+
+
   draw:   ->
     Canvas.clear()
 
@@ -61,7 +69,7 @@ class RPGZero extends atom.Game
 #      console.log "=== attempting to render current world view!!!!"
       CurrentWorldView.render()
 
-  update: (dt) ->
+  update: (dt) =>
 #    console.log "--- update"
 #    console.log "current game state: #{window.GameState.get('name')}"
 
@@ -93,16 +101,62 @@ class RPGZero extends atom.Game
 #     WorldsView.
 
     if GameState is GameStates.Playing
-      if atom.input.down 'left'
-        ontology.move('west')
-      else if atom.input.down 'right'
-        ontology.move('east')
-      if atom.input.down 'up'
-        ontology.move 'north'
-      else if atom.input.down 'down'
-        ontology.move 'south'
+      @tick = @tick + 1
+#      console.log "=== tick #{@tick} (moving? #{@player_moving}, last move at t=#{@last_player_move_tick} [cooldown = #{@player_cooldown}])"
+
+      if @player_moving && @last_player_move_tick + @player_cooldown < @tick
+#        console.log "=== PLAYER WAITED OUT COOLDOWN*******"
+        @player_moving = false
+
+      map = CurrentWorld.game_map
+      if map && !@player_moving
+        moved = false
+        direction = null
+        if atom.input.down 'left'
+          direction = 'west'
+          moved = true
+        else if atom.input.down 'right'
+          direction = 'east'
+          moved = true
+        if atom.input.down 'up'
+          direction = 'north'
+          moved = true
+        else if atom.input.down 'down'
+          direction = 'south'
+          moved = true
+
+        player = map.current_player()
+        if player && moved
+          console.log "--- moving player: "
+          console.log player
+          if map.enemyPresent(direction)
+            # don't change player local position -- server should interpret move as attack...
+            console.log "=== #{player.get('name')} attacking enemy!"
+            ontology.move(direction)
+            @player_moving = true
+            @last_player_move_tick = @tick
+          else if map.passable(direction)
+            console.log "=== moving player #{player.get('name')} #{direction} [assuming current player]"
+            new_position = Zephyr.Models.GameMap.delta(player.get('x'),player.get('y'),direction)
+            player.set({x: new_position[0], y: new_position[1]})
+            ontology.move(direction)
+            console.log "=== player moving? #{@player_moving}"
+            @player_moving = true
+            @last_player_move_tick = @tick
+          else
+            console.log "--- map isn't accessible in that direction!"
+
+      # note: assuming we are current player...
+
+#      else
+#        console.log "--- current world didn't have a map?"
+#        console.log CurrentWorld
 #    else if atom.input.released 'click'
 #      console.log 'tap!'
+#      if passable(direction)
+#        # TODO update player
+#        ontology.move(direction)
+#        player.set({x: })
 
 $(document).ready ->
   console.log "=== preloading images and sounds"

@@ -28,7 +28,7 @@ class Zephyr.Views.WorldsView extends Backbone.View
     @collection.each (world) =>
 #      console.log world
       @summaryFor(world).render() # @worldViews, (view)  =>
-      player_count = player_count + world.get('players').length
+      player_count = player_count + world.get('player_ids').length
       #view.render()
     _.each @labels,     (label) => label.draw()
 #    console.log "--- worlds view render! i have these players:"

@@ -10,7 +10,7 @@ class Zephyr.Views.WorldSummaryView extends Backbone.View
 #    count = 0
 #    count = players.length if players
 #    count = @model.get('players').length if @model.get 'players'
-    count = @model.get("players").length
+    count = @model.get("player_ids").length
 #    console.log "--- player count: #{count}"
     tick  = @model.get 'tick'
     name  = @model.get 'name'

@@ -19,16 +19,20 @@ class Zephyr.Models.World extends Backbone.Model
 #    @players  = new Zephyr.Collections.Players({world: @})
 
   activate: =>
-#    console.log "--- world activated! should probably load players and map...."
-
+    console.log "--- world activated! should probably load players and map...."
     console.log "=== world #{@get('name')} about to load game map with id #{@get('game_map_id')}"
 
     @players  = new Zephyr.Collections.Players([],{world_id:@get('id')})
     @enemies  = new Zephyr.Collections.Enemies([],{world_id:@get('id')})
-    @events   = new Zephyr.Collections.Events([],{world_id:@get('id')})
+#    @events   = new Zephyr.Collections.Events([],{world_id:@get('id')})
 #    console.log "--- players (in world#activate): "
 #    console.log @players
-    @game_map = new Zephyr.Models.GameMap({id: @get('game_map_id'), players: @players, enemies: @enemies, events: @events}) #new Zephyr.Collections.Players([],{world_id:@get('id')})})
+    @game_map = new Zephyr.Models.GameMap
+      id: @get('game_map_id')
+      players: @players
+      enemies: @enemies
+#      events: @events #new Zephyr.Collections.Players([],{world_id:@get('id')})})
+
 
   deactivate: =>
     console.log "--- deactivating subscription to world resources..."
@@ -36,20 +40,5 @@ class Zephyr.Models.World extends Backbone.Model
     @players.stream.stop() #unsubscribe()
     @enemies.stream.stop()
     @game_map.stream.stop() #unsubscribe()
+
     console.log "--- done!"
-
-#    console.log "--- i know player ids... so we could just go ahead and create players here"
-
-
-#   we want to get the model's map data and player ids
-#    @map_data = GameMaps.get({id: @model.get('game_map_id')})
-
-#    players = []
-#    _.each @model.get("player_ids"), (player_id) =>
-#      players.push Players.get({id: player_id})
-
-    # well, we need to subscribe...
-#    @players = new Zephyr.Collections.Players({collection: players, subscribe: false})
-
-# firehose-powered backbone models :)   no. not for you. yet anyway...
-#Zephyr.Models.World.setup()

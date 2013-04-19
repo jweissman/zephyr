@@ -18,6 +18,10 @@ class Zephyr.Models.Player extends Backbone.Model # RelationalModel
     ObjectHelper.addRole(@, FirehoseConsumer)
     @subscribe 'player', @get('id')
 
+#  move: (direction) =>
+#    map = window.CurrentWorld.get('game_map')
+
+
 #Zephyr.Models.Player.setup()
 
 #    console.log "=================== creating player!!!"

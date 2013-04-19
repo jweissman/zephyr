@@ -3,6 +3,10 @@
 class Zephyr.Views.GameMapView extends Backbone.View
   initialize: (options) =>
 
+    @tile_size = 32
+    @x_offset = 1
+    @y_offset = 1
+
     console.log "==== game map view, model: "
     console.log @model
 
@@ -10,8 +14,8 @@ class Zephyr.Views.GameMapView extends Backbone.View
 
     console.log @model.get('players')
 
-    console.log "--- enemies (in game_map_view#new)"
-    console.log @model.get('enemies')
+#    console.log "--- enemies (in game_map_view#new)"
+#    console.log @model.get('enemies')
 
 
     ####################################################################################################################
@@ -38,10 +42,11 @@ class Zephyr.Views.GameMapView extends Backbone.View
 
     # bind to events? it could just emit a custom event and i could pick it up
     # but i figured simplest possible thing to check if we can get this working :)
-    @model.get('events').on 'add', (event) =>
-      console.log "====== GOT AN EVENT"
+#    @model.get('events').on 'add', (event) =>
+    ontology.on 'game_event', (event) =>
+      console.log "====== GOT A GAME EVENT (via websockets now!)"
       console.log event
-      kind = event.get('kind')
+      kind = event['kind']
       if kind == 'damage'
         console.log "=== hurray, you hit!"
         atom.playSound('sword')
@@ -50,12 +55,32 @@ class Zephyr.Views.GameMapView extends Backbone.View
         atom.playSound('miss')
       else if kind == 'death'
         console.log "=== someone died!"
+        # actually need to update the local entity here now :/
+        # although the update should have come from firehose... :/
+        # apparently can't rely on for data services? what is going on with this?
 
-      console.log "--- i have played a sound maybe?"
-
-      # adding a disappearing damage label and play an appropriate sound :)
-#      console.log data
-
+        atom.playSound('sword') # TODO use a different sound for death
+      else if kind == 'movement'
+        console.log "=== someone moved!"
+        details = event['details']
+        uuid = details['uuid']
+        console.log "--- got move event uuid: #{uuid}"
+        if ontology.sentEvent(uuid)
+          console.log "--- this client sent this move, ignoring...**************"
+        else
+          console.log "--- another client sent this move....**********"
+          player_id = details['player_id']
+          x = details['x']
+          y = details['y']
+          console.log "--- some other client moved to #{x}, #{y}!"
+          console.log "processing move for player #{player_id}..."
+          moving_player = @model.get('players').get(player_id)
+          console.log "=== moving player #{player_id}"
+          moving_player.set({x:x,y:y})
+          console.log "--- player #{moving_player.get('name')} moved to #{x}, #{y}!"
+      else
+        console.log "=== i don't understand event type '#{kind}'"
+      console.log "--- done processing event receipt..."
 
   clicked: (mouse) =>
     clicked_label = null
@@ -64,52 +89,45 @@ class Zephyr.Views.GameMapView extends Backbone.View
         clicked_label = label_name
     return clicked_label
 
-  render: ->
+  current_player: =>
+    @model.current_player()
+
+
+  render: =>
+    user = @model.current_player()
+    if user
+      screen_center_x = atom.width / 2
+      screen_center_y = atom.height / 2
+      @x_offset = (screen_center_x/32) - user.get('x')
+      @y_offset = (screen_center_y/32) - user.get('y')
+    else
+      @x_offset = 1
+      @y_offset = 1
+
     map = @model.get('rows')
-#    console.log "=== GOT MAP: "
-#    console.log map
-#
     ts = 32
-##    console.log "--- tile size: #{ts}"
-##
     @tilemap(map,{tile_size:ts}) if map
 
-#    console.log "--- handling labels..."
     _.each @labels, (label) => label.draw()
-
-#    console.log "--- i have players: "
-#    console.log @model.get('players')
 
     players = @model.get('players')
     unless !players || players.length == 0
-#      console.log '--- the world should really have players! maybe the update is not here yet...?'
-#    else
-#      console.log "--- i've got players baby! here they are:"
-#      console.log players
-#      console.log "--- i have the following players: "
-#      console.log players
-#      for player in players
       players.each (player) =>
-#        console.log "--- i have the following for a player: "
-#        console.log player
-        x  = (player.get('x')+1)*ts
-        y  = (player.get('y')+1)*ts
+        x  = (player.get('x')+@x_offset)*ts
+        y  = (player.get('y')+@y_offset)*ts
         @sprites['warrior'].draw x,y
-        new Canvas.Text(x,y+ts*2,{msg: "#{player.get('name')}!", fill_style: 'white', center: 'true'}).draw()
+        new Canvas.Text(x,y+ts*2,{msg: "#{player.get('name')} [#{player.get('hp')}] (#{player.get('x')},#{player.get('y')})", fill_style: 'white', center: 'true'}).draw()
+
     enemies = @model.get('enemies')
-#    console.log "--- about to render enemies!"
-#    console.log enemies
     unless !enemies || enemies.length == 0
       enemies.each (enemy) =>
-#        console.log enemy
-        x = (enemy.get('x')+1)*ts
-        y = (enemy.get('y')+1)*ts
+        x = (enemy.get('x')+@x_offset)*ts
+        y = (enemy.get('y')+@y_offset)*ts
         @sprites['skeleton'].draw x,y
 
         name = enemy.get("name")
         hp = enemy.get("hp")
         message = "#{name} [#{hp}]"
-#        console.log "--- about to render message: #{message}"
         new Canvas.Text(x,y+ts*2,{
           msg: message
           fill_style: 'red'
@@ -121,32 +139,25 @@ class Zephyr.Views.GameMapView extends Backbone.View
       when 0 then @sprites['steel']
       else @sprites['floor']
 
-  tilemap: (map, opts) ->
-    # might make sense just to cache the map -- though hold off on this
-    # first make it scrollable and cache large segments of it -- 256x256 or so i would think? (maybe bigger...)
-    # for now it's fine :)
-    # (the other side of that is clipping -- but again, for now it's fine. we're not even drawing big maps at all.)
-    ts = opts['tile_size'] or 32
-    sx = opts['x_offset']  or 0
-    sy = opts['y_offset']  or 0
+  tilemap: (map) ->
+    ts = @tile_size
+    sx = @x_offset
+    sy = @y_offset
 
     for row, mapY in map
       for element, mapX in row
-        x = (mapX+1) * ts
-        y = (mapY+1) * ts
+        x = (mapX+sx) * ts
+        y = (mapY+sy) * ts
+        # TODO if real x,y is even on the screen...
         sprite = @dereferenceSprite(element)
-        sprite.draw(x+sx,y+sy)
+        sprite.draw(x,y)
 
 # go ahead and handle assets here...?
 $(document).ready ->
-#  console.log "--- canvas view queuing assets...."
   Assets.queueDownload('floor.png')
   Assets.queueDownload('steel.png')
   Assets.queueDownload('warrior.png')
   Assets.queueDownload('skeleton.png')
-
-#  Assets.queueDownload()
-
 
 
 
