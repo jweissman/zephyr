@@ -1,3 +1,4 @@
+# handling directly via websockets -- it's a bit much to force resourceful semantics onto this...
 #class Zephyr.Collections.Events extends Backbone.Collection
 #  initialize: (models, options) =>
 #    if options && options.world_id

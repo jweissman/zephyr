@@ -1,11 +1,11 @@
 
 root = (exports ? this)
 class root.Ontology
-  constructor: (@host, @port, @player_id, @player_name) -> #, @username) ->
+  constructor: (@host, @player_id, @player_name) -> #, @username) ->
     unless "WebSocket" of window
       alert "We're sorry, but WebSockets are not available in this browser."
       return
-    @ws = new WebSocket("ws://#{@host}:#{@port}/ws")
+    @ws = new WebSocket("ws://#{@host}/ws")
     @ws.onopen    = (evt) => @handleOpen()
     @ws.onmessage = (evt) => @handleMessage(evt)
     @ws.onclose   = (evt) => @handleClose()
@@ -96,5 +96,5 @@ $(document).ready ->
   console.log "=== ontology client establishing connection..."
   if ontology_host?
     console.log "--- establishing connection to ontology host / not joining!"
-    window.ontology = new Ontology(ontology_host,9000,player_id,player_name)
+    window.ontology = new Ontology(ontology_host,player_id,player_name)
 
