@@ -17,14 +17,11 @@ It's all relatively fast, as such things go, but I think we'll definitely want t
  example, maybe using rot.js. One goal for this is to try to help identify and extract the platform and services we'll
  need for larger multiplayer systems.
 
-# Multiplayer Pong
+# Roguelike
 
-This is the next major target. We're currently building out a node.js 'game' server which can keep track of
-
-- the lobby and matchmaking services, and
-- simulation (authority over) game state
-
-With this in place we should be able to setup games and arbitrate them with an independent server process. Eventually it would be nice to extend this to doing things like auditing client logs for cheating, etc.
+This is the next major target. If you have an account, you should be able to login to the system
+at /zero. It's very alpha/proof-of-concept, but we are currently generating small labyrinths and hosting
+multiple players within them, using Goliath websockets and Firehose streams to keep everything synced.
 
 # Requirements
 
@@ -87,7 +84,11 @@ Since it's part of our "infrastructure" now I'll try to document it a bit more c
 I've gone ahead and put my DIY folder structure [up on Github](https://github.com/jweissman/zephyr-faye-diy) in case
 anyone else wants to repurpose it.
 
+(For the multiplayer roguelike POC you'll need a few additional components: Ontology, the world
+server, and a Firehose.io instance. I've managed to get both of these running on OpenShift; I can
+provide details if need be.)
+
 # Considerations
 
 Andrew Kasper (@akasper) -- review/consultation/testing
-...
+James Logsdon (@jlogsdon) -- review/support
