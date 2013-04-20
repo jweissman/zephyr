@@ -1,5 +1,13 @@
 class Star < ActiveRecord::Base
-  attr_accessible :active, :description, :name, :x, :y
+  attr_accessible :active, :description, :name, :x, :y, :layer
+  #
+  #before_create :assign_layer
+  #
+  #def assign_layer
+  #  self.layer = Integer(rand()*4)
+  #  true
+  #end
+
   def self.faye_channel; 'stars' end
   def self.at(x,y)
     Star.new :x => x, :y => y

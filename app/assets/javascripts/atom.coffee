@@ -1,5 +1,6 @@
 # canvas game coffee 'bootstrapper' (from nornagon/atom)
 
+
 requestAnimationFrame = window.requestAnimationFrame or
 window.webkitRequestAnimationFrame or
 window.mozRequestAnimationFrame or
@@ -78,6 +79,7 @@ atom.button =
   RIGHT: -3
   WHEELDOWN: -4
   WHEELUP: -5
+
 atom.key =
   TAB: 9
   ENTER: 13
@@ -105,30 +107,42 @@ eventCode = (e) ->
     else
       atom.button.WHEELDOWN
 
-atom.canvas = document.getElementsByTagName('canvas')[0]
-atom.canvas.style.position = "absolute"
-atom.canvas.style.top = "0"
-atom.canvas.style.left = "0"
-atom.context = atom.canvas.getContext '2d'
-
-atom.canvas.onmousemove = atom.input.onmousemove.bind(atom.input)
-atom.canvas.onmousedown = atom.input.onmousedown.bind(atom.input)
-atom.canvas.onmouseup = atom.input.onmouseup.bind(atom.input)
-atom.canvas.onmousewheel = atom.input.onmousewheel.bind(atom.input)
-atom.canvas.oncontextmenu = atom.input.oncontextmenu.bind(atom.input)
-
+atom.height_multiplier = 1.0
 window.onresize = (e) ->
-  atom.canvas.width = window.innerWidth
-  atom.canvas.height = window.innerHeight
+  atom.canvas.width = window.innerWidth #* atom.height_multiplier
+  atom.canvas.height = window.innerHeight * atom.height_multiplier
   atom.width = atom.canvas.width
   atom.height = atom.canvas.height
-window.onresize()
+
+$(document).ready ->
+  console.log "--- atom start"
+  atom.canvas = document.getElementsByTagName('canvas')[0]
+  atom.canvas.style.position = "absolute"
+  atom.canvas.style.top = "0"
+  atom.canvas.style.left = "0"
+  atom.context = atom.canvas.getContext '2d'
+
+  atom.canvas.onmousemove = atom.input.onmousemove.bind(atom.input)
+  atom.canvas.onmousedown = atom.input.onmousedown.bind(atom.input)
+  atom.canvas.onmouseup = atom.input.onmouseup.bind(atom.input)
+  atom.canvas.onmousewheel = atom.input.onmousewheel.bind(atom.input)
+  atom.canvas.oncontextmenu = atom.input.oncontextmenu.bind(atom.input)
+
+  window.onresize()
+
+#  Molecular.launch()
+
+window.lastScrollY = 0
+window.onscroll = (e) ->
+  #console.log 'scrolllll!'
+  window.lastScrollY = window.scrollY
 
 class Game
   constructor: ->
   update: (dt) ->
   draw: ->
   run: ->
+    console.log "--- atom.Game running!"
     return if @running
     @running = true
 
@@ -190,7 +204,7 @@ atom.preloadSounds = (sfx, cb) ->
     do (name, url) ->
       atom.loadSound "sounds/#{url}", (error, buffer) ->
         console.error error if error
-        atom.sfx[s] = buffer if buffer
+        atom.sfx[name] = buffer if buffer
         cb?() unless --toLoad
 
 atom.playSound = (name, time = 0) ->

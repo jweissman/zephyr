@@ -2,6 +2,8 @@
 
 A game programming framework in Ruby and Rails, using Backbone.js and Faye for front-end synchronicity.
 
+# Full of Stars
+
 Currently, the root points at a 'full of stars' proof of concept, which displays some canvas entities that can be
 created with a click. These entities sync with Rails, which in turn talks to Faye, which then broadcasts an update to
 clients so that the star field async updates for anyone on the page.
@@ -14,6 +16,12 @@ It's all relatively fast, as such things go, but I think we'll definitely want t
  want to observe server-side. Eventually we're looking to include a few "classic" game demos like Pong and a roguelike
  example, maybe using rot.js. One goal for this is to try to help identify and extract the platform and services we'll
  need for larger multiplayer systems.
+
+# Roguelike
+
+This is the next major target. If you have an account, you should be able to login to the system
+at /zero. It's very alpha/proof-of-concept, but we are currently generating small labyrinths and hosting
+multiple players within them, using Goliath websockets and Firehose streams to keep everything synced.
 
 # Requirements
 
@@ -76,7 +84,11 @@ Since it's part of our "infrastructure" now I'll try to document it a bit more c
 I've gone ahead and put my DIY folder structure [up on Github](https://github.com/jweissman/zephyr-faye-diy) in case
 anyone else wants to repurpose it.
 
+(For the multiplayer roguelike POC you'll need a few additional components: Ontology, the world
+server, and a Firehose.io instance. I've managed to get both of these running on OpenShift; I can
+provide details if need be.)
+
 # Considerations
 
 Andrew Kasper (@akasper) -- review/consultation/testing
-...
+James Logsdon (@jlogsdon) -- review/support

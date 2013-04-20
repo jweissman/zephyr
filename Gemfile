@@ -10,16 +10,24 @@ gem 'awesome_print'
 gem 'backbone-on-rails'
 gem 'backbone_sync-rails'
 gem 'cancan'
+gem 'em-hiredis', '< 0.2.0'
 gem 'faye'
+gem 'firehose'
 gem 'jquery-rails'
-gem 'pg'
+gem 'rack-firehose', github: 'jch/rack-firehose'
 gem 'rails', '~> 3.2.12'
+gem 'rainbows'
+gem 'sinatra'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sorcery'
 gem 'thor'
-gem 'unicorn'
+#gem 'unicorn'
 gem 'valid_email'
+
+group :production, :test do
+  gem 'pg'
+end
 
 # asset gems
 group :assets do
@@ -44,10 +52,12 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.12.0'
   gem 'simplecov'
   gem 'timecop'
+  gem 'pry'
 end
 
 # dev gems
 group :development do
+  gem 'sqlite3'
   gem 'foreman'
   gem 'growl'
   gem 'guard'
@@ -57,4 +67,8 @@ group :development do
   gem 'launchy'
   gem 'mailcatcher'
   gem 'rb-fsevent'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+  gem 'lorem'
 end

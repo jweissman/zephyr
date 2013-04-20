@@ -1,0 +1,70 @@
+h1 Lobby, yeah!
+p I guess you should be able to see a list of the open games below, and start a new game.
+
+.modal.hide#create-game-modal
+  .modal-header
+    a.close x
+    h3 Create a Game
+  .modal-body
+    form
+      .clearfix
+        label for='inputRoomName' Enter Room Name:
+        .input
+          input#inputRoomName type='text' size=30
+  .modal-footer
+    a.btn.btn-primary href='#' onclick="saveRoomName();" Create!
+    a.btn.btn-warning href='#' Cancel
+
+/.modal.hide#name-modal
+/  .modal-header
+/    a.close x
+/  .modal-body
+/  .modal-footer
+
+/.modal.hide#join-room-modal
+/  .modal-header
+/    a.close x
+/    h3 Join a Room
+/  .modal-body
+/    form
+/      .clearfix
+/        label for='roomSelect' Select a Room
+/  .modal-footer
+/    a.btn.btn-primary href="#"
+
+
+.open-games
+  p (open games here)
+  /canvas#lobby
+
+textarea#chat row=10 columns=50 style='width:200px;height:500px'
+br
+input#message type='text' columns=40
+
+.btn.btn-large.send onclick="distributeMessage($('#message').get(0).value)" Send message
+.btn.btn-large.create-game Create a game
+
+script src="http://localhost:8080/nowjs/now.js"
+
+coffee:
+  now.ready ->
+    console.log('now ready, baby!')
+    now.getPlayerList (data) ->
+      console.log(data)
+
+    now.receiveMessage = (name, message) ->
+      val = $('#chat').get(0).value
+      val += "#{name}: #{message}\n"
+      $('#chat').get(0).value = val
+      console.log("Received message: #{message} from: #{name}")
+
+    window.distributeMessage = (message) ->
+      console.log "--- attempting to distribute message #{message}"
+      console.log "--- current name: #{now.name}"
+      if now.name is undefined
+        now.name = prompt("What is your name?")
+      now.distributeMessage(message)
+
+canvas#lobby
+
+p ...

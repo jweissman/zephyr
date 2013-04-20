@@ -6,9 +6,13 @@ class Zephyr.Models.Star extends Backbone.Model
     star:
       x: 0
       y: 0
+      layer: 2
+      active: true
+      description: 'a normal little star'
+      name: 'Some Star'
 
-  initialize: ->
-    @view = new Zephyr.Views.StarView(model: @)
+  wobble: ->
+    @set('x', @get('x') + (0.5 - Math.random()))
 
-  render: =>
-    @view.render()
+
+

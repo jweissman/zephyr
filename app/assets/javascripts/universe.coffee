@@ -1,22 +1,43 @@
-class Universe extends Molecular.App
-  setup: ->
+# TODO rewrite using ontology/firehose :)
+#
+# cool things we could do:
+#     - the basic unified 'movement' behavior i was initially wondering about with this
+#       (rotating stars, or being pulled into a 'vortex', or even 'warped' by the movement
+#        of the mouse, etc.)
+#
+# interesting reasons to do it:
+#     - we could start building some of the client-side physics simulation that
+#       we would need for more 'twitchy' games to feel responsive; as well as the
+#       logic for 'smoothly' integrating updates
+#
+class Universe extends atom.Game
+  constructor: ->
     super
-    @collection        = Stars
-    @view              = StarsView
+    atom.input.bind atom.button.LEFT, 'click'
 
-  run: ->
-    super
-    @collection.fetch({})
+  draw: -> StarsView.render()
 
-  update: ->
-    console.log "--- step"
-    @collection.update()
+  update: (dt) ->
+    if atom.input.released 'click'
+      @click(atom.input.mouse)
 
-# not really sure a better place to put these...
-window.Stars       = new Zephyr.Collections.Stars()
-window.StarsView   = new Zephyr.Views.StarsView {collection: Stars}
-window.Star        = Zephyr.Models.Star
-window.StarView    = Zephyr.Views.StarView
+    Stars.update()
 
-universe = new Universe
-universe.run()
+  click: (mouse) ->
+    layer = Math.floor(1+Math.random()*4)
+    inverseY = StarView.absoluteToRelativeY(mouse.y, layer)
+    Stars.addOne(mouse.x, inverseY, layer)
+
+$(document).ready ->
+  console.log "=== universe booting up!"
+  window.Star        = Zephyr.Models.Star
+  window.StarView    = Zephyr.Views.StarView
+  window.Stars       = new Zephyr.Collections.Stars()
+  window.StarsView   = new Zephyr.Views.StarsView
+    collection: Stars
+
+  # and let go!
+
+  atom.height_multiplier = 2
+  universe = new Universe()
+  universe.run()
