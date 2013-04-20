@@ -40,7 +40,7 @@ Zephyr.Molecular.Sync = {
   # model subscription to server-side CRUD ops
   # currently uses faye/websockets to keep a collection 'automatically' in sync between clients
   subscribe: (model, channel) ->
-    faye_client = new Faye.Client(Molecular.Sync.FayeServer)
+    faye_client = new Faye.Client(window.faye_server)
     new BackboneSync.RailsFayeSubscriber model,
       channel: channel
       client: faye_client # new Faye.Client(Molecular.Sync.FayeServer)

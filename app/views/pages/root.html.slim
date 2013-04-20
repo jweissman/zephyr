@@ -34,10 +34,8 @@ canvas.universe
 
 
 javascript:
-  faye_server = "#{Zephyr::Application.config.faye_secure_server}";
+  window.faye_server = "#{Zephyr::Application.config.faye_secure_server}";
 coffee:
-  Molecular.Sync.FayeServer = faye_server
-
   $(".toggle-me").click ->
     $(".toggle-me").addClass "active"
     $(".project-copy").toggle()

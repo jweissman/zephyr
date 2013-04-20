@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require underscore
 //= require backbone
+//= require support/assets
 //= require support/backbone-relational
 //= require support/object_helper
 //= require support/mixin
